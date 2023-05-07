@@ -3,15 +3,18 @@ import ReactDOM from 'react-dom/client';
 import './index.scss';
 import reportWebVitals from './reportWebVitals';
 import SearchBox from './components/search-box/src/SearchBox';
+import { DOLAR_PIRULO } from './dolar-pirulo';
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <div className={'mtg-tutor__main-container'}>
+    <div className='mtg-tutor__main-container'>
       <div className='title'>MTG PRICE TUTOR</div>
-    <SearchBox />
+        <span className='subtitle'>Precios calculados según Dolar Pirulo: ${DOLAR_PIRULO}</span>
+        <SearchBox />
     </div>
   </React.StrictMode>
 );
