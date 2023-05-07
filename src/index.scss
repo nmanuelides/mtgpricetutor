@@ -20,8 +20,11 @@ code {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 32px;
   .title{
     font-size:xx-large;
+    font-weight: 600;
+    font-family: 'Cantarell', sans-serif;
     color: white;
   }
 }

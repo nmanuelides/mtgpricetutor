@@ -10,7 +10,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <div className={'mtg-tutor__main-container'}>
-      <div className='title'>MTG TUTOR</div>
+      <div className='title'>MTG PRICE TUTOR</div>
     <SearchBox />
     </div>
   </React.StrictMode>
