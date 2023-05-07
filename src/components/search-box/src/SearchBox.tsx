@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { debounce } from "lodash";
-import { fetchCards, fetchCardByName } from "../../../services/cards";
+import { fetchCards } from "../../../services/cards";
 import { getCardPrices, Card } from "../../../services/starCityGamesCardPrices";
 import Tilt from '../../../hoc/Tilt';
-import '../styles/desktop.scss';
-import '../styles/mobile.scss';
+import { tiltOptions } from "../../../hoc/tiltOptions";
 import { DOLAR_PIRULO } from "../../../dolar-pirulo";
 import { getFontColorForBackground } from "../../helpers/imageColors";
+import '../styles/desktop.scss';
+import '../styles/mobile.scss';
 
 const SearchBox = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -14,44 +15,6 @@ const SearchBox = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [selectedCards, setSelectedCards] = useState<Card[]>([]);
 
-  const options = {
-    reverse:           true,  // reverse the tilt direction
-    max:               15,     // max tilt rotation (degrees)
-    perspective:       1000,   // Transform perspective, the lower the more extreme the tilt gets.
-    scale:             1,      // 2 = 200%, 1.5 = 150%, etc..
-    speed:             300,    // Speed of the enter/exit transition
-    transition:        true,   // Set a transition on enter/exit.
-    axis:              null,   // What axis should be disabled. Can be X or Y.
-    reset:             true,    // If the tilt effect has to be reset on exit.
-    easing:            "cubic-bezier(.03,.98,.52,.99)",    // Easing on enter/exit.
-    glare:             true,   // if it should have a "glare" effect
-    "max-glare":       0.35,      // the maximum "glare" opacity (1 = 100%, 0.5 = 50%)
-    "glare-prerender": false   // false = VanillaTilt creates the glare elements for you, otherwise
-                               // you need to add .js-tilt-glare>.js-tilt-glare-inner by yourself
-}
-
-  const priceClassForBorderColor = (borderColor: string): string => {
-    let classForBorderColor= '';
-    switch (borderColor) {
-      case 'black':
-        classForBorderColor = 'search-results-container__card-price-container-black';
-        break;
-      case 'white':
-        classForBorderColor = 'search-results-container__card-price-container-white';
-        break;
-      case 'silver':
-        classForBorderColor = 'search-results-container__card-price-container-silver';
-        break;
-      case 'colorless':
-        classForBorderColor = 'search-results-container__card-price-container-borderless';
-        break;
-      default:
-        classForBorderColor = 'search-results-container__card-price-container-black';
-        break;
-    }
-
-    return classForBorderColor;
-  }
   const debouncedSearchHandler = useRef(
     debounce((searchTerm: string) => {
       fetchCards(searchTerm).then(data => {
@@ -63,12 +26,6 @@ const SearchBox = () => {
   ).current;
 
   const onCardSelected = (selectedCardIndex: number) => {
-    /* fetchCardByName(searchResults[selectedCardIndex]).then(results => {
-      setSearchResults([])
-      setSelectedCards(results)
-    }).catch(error => {
-      console.error(error);
-    }); */
     getCardPrices(searchResults[selectedCardIndex]).then(results => {
       setSearchResults([]);
       setSelectedCards(results);
@@ -108,7 +65,7 @@ const SearchBox = () => {
   return (
     <form className={selectedCards.length > 0 ? 'search-box__with-results' : 'search-box'} onSubmit={onSubmit}>
       <div className={'search-box__input-container'}>
-        <input name='searchInput' className={'search-box__input-text'} type="text" value={searchTerm} ref={inputRef} onChange={onInputChange} />
+        <input name='searchInput' className={'search-box__input-text'} type="text" value={searchTerm} ref={inputRef} onChange={onInputChange} autoComplete="off"/>
         <button className={'search-box__button'} type='submit'>Search</button>
       </div>
       <div className={'search-results-container'}>
@@ -125,7 +82,7 @@ const SearchBox = () => {
           {selectedCards.map((card: Card) => {
             const priceStyle = { background: card.borderColor, color: getFontColorForBackground(card.borderColor) };
             return (
-              <Tilt options={options} className="search-results-container__card" key={card.image}>
+              <Tilt options={tiltOptions} className="search-results-container__card" key={card.image}>
                 <img src={card.image} alt="Example image" className={'search-results-container__card-image'} key={card.image}/>
                 <div className={'search-results-container__card-price-container'} style={priceStyle}>
                   <span>US${card.price}</span>

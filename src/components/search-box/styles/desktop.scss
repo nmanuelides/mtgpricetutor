@@ -9,9 +9,6 @@
         flex-direction: column;
         align-items: center;
         margin-top: 32px;
-        animation-name: search-box-animation;
-        animation-duration: 0.5s;
-        animation-timing-function: ease-in-out;
     }
 
     &__input-container {
@@ -96,6 +93,9 @@
         border-top: 1px solid rgba(255, 255, 255, 0.2);
         border-left: 1px solid rgba(255, 255, 255, 0.2);
         overflow: hidden;
+        animation-name: search-box-animation;
+        animation-duration: 0.5s;
+        animation-timing-function: ease-in-out;
     }
 
     &__card-price-container {
@@ -113,48 +113,7 @@
             max-width: 100%;
             font-weight: 600;
             width: fit-content;
-            font-size: calc(10px + 0.5vw);
-        }
-
-        &-black {
-            background: rgb(23, 21, 21);
-            span {
-                color: white;
-            }
-        }
-
-        &-white {
-            background: rgb(234, 233, 233);
-            span {
-                color: black;
-            }
-        }
-
-        &-silver {
-            span {
-                color: white;
-            }
-            background: silver;
-        }
-
-        &-borderless {
-            position: relative;
-            span {
-                color: white;
-            }
-            &::before {
-                content: "";
-                position: absolute;
-                top: 0;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                background-image: var(--bg-image);
-                background-repeat: no-repeat;
-                background-size: cover;
-                filter: blur(10px);
-                z-index: -1;
-            }
+            font-size: calc(10px + 0.35rem);
         }
     }
 
@@ -171,19 +130,25 @@
         z-index: 1;
     }
 
+    &__result-item:not(:last-child) {
+        border-bottom: 1px solid #c8e4de;
+    }
+    &__result-item:last-child {
+        border-radius: 0 0 6px 6px;
+    }
     &__result-item {
-      color: black;
-      font-size: normal;
-      font-weight: 600;
-      line-height: 32px;
-      padding-left: 8px;
-      border-bottom: 1px solid #c8e4de;
-    }
+        color: black;
+        font-size: normal;
+        font-weight: 600;
+        line-height: 32px;
+        padding-left: 8px;
+        cursor: pointer;
+      }
 
-    &__result-item:hover {
-      background: #00ffc3;
-      color: #2b2827;
-    }
+      &__result-item:hover {
+        background: #00ffc3;
+        color: #2b2827;
+      }
   }
 
 .js-tilt-glare {
@@ -191,10 +156,13 @@
 }
 
 @keyframes search-box-animation {
-    from {
-        margin-top: 300px;
+    0% {
+        scale: 0;
     }
-    to {
-        margin-top: 64px;
+    50% {
+        scale: 1.1;
+    }
+    100% {
+        scale: 1;
     }
 }
