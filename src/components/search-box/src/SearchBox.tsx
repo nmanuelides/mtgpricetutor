@@ -80,13 +80,15 @@ const SearchBox = () => {
         <div className={searchResults.length > 0 ? 'search-results-container__card-results-blurred' :'search-results-container__card-results'}>
         <div className={'search-results-container__card-results-list'}>
           {selectedCards.map((card: Card) => {
-            const priceStyle = { background: card.borderColor, color: getFontColorForBackground(card.borderColor) };
+            const contrastingColor = getFontColorForBackground(card.borderColor);
+            const priceStyle = { background: card.borderColor, color: contrastingColor };
+            const arsPriceStyle = {border: `2px solid ${contrastingColor}`, borderRadius:'8px', padding:'4px'}
             return (
               <Tilt options={tiltOptions} className="search-results-container__card" key={card.image}>
                 <img src={card.image} alt="Example image" className={'search-results-container__card-image'} key={card.image}/>
                 <div className={'search-results-container__card-price-container'} style={priceStyle}>
                   <span>US${card.price}</span>
-                  <span>AR${(parseFloat(card.price)*DOLAR_PIRULO).toFixed(2)}</span>
+                  <span style={arsPriceStyle} >AR${(parseFloat(card.price)*DOLAR_PIRULO).toFixed(2)}</span>
                 </div>
                 {console.log('Border color: '+card.borderColor)}
               </Tilt>

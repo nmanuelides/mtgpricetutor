@@ -4,21 +4,29 @@
     width: 86svw;
 }
 
-.search-results-container__card-results{
+.search-results-container {
+    &__card {
+        border-radius: 13px
+    }
+    &__card-image {
+        border-radius: 13px;
+    }
+    &__card-results{
     &-blurred {
         position: absolute;
-        top: 17%;
-        left: 2%;
+        top: 16%;
+        left: 12.5%;
         right: 9%;
         filter: blur(5px);
       }
     &-list {
     display: grid;
-        grid-template-columns: repeat(2, 172px);
+        grid-template-columns: repeat(2, 182px);
         grid-auto-rows: auto;
         grid-gap: 32px;
         margin-top: 32px;
     }
+}
 }
 .search-box__input-container {
     width: 90svw;
