@@ -1,0 +1,26 @@
+@media (max-width: 768px) {
+
+.search-results-container__list {
+    width: 86vw;
+}
+
+.search-results-container__card-results{
+    &-blurred {
+        position: absolute;
+        top: 17%;
+        left: 2%;
+        right: 9%;
+        filter: blur(5px);
+      }
+    &-list {
+    display: grid;
+        grid-template-columns: repeat(2, 172px);
+        grid-auto-rows: auto;
+        grid-gap: 32px;
+        margin-top: 32px;
+    }
+}
+.search-box__input-container {
+    width: 90vw;
+}
+}

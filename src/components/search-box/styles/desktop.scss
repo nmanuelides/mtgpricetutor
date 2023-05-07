@@ -1,0 +1,200 @@
+.search-box {
+    display: flex;
+    flex-direction: column;
+    margin-top: 32px;
+    align-items: center;
+
+    &__with-results {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 32px;
+        animation-name: search-box-animation;
+        animation-duration: 0.5s;
+        animation-timing-function: ease-in-out;
+    }
+
+    &__input-container {
+        display: flex;
+    }
+
+    &__input-text {
+        position: relative;
+        background: white;
+        border-radius: 25px;
+        height: 48px;
+        width: 400px;
+        border: none;
+        padding: 2px 16px;
+        z-index: 100;
+        font-size: medium;
+        font-weight: 600;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+        outline: none;
+    }
+
+    &__button {
+        position: relative;
+        margin-left: -24px;
+        padding-left: 32px;
+        padding-right: 16px;
+        border-radius: 0 25px 25px 0;
+        background: #00ffc3;
+        color: #2b2827;
+        font-weight: 600;
+        font-size: large;
+        border: none;
+        height: 52px;
+        z-index: 10;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+
+    }
+
+}
+
+.search-results-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &__list {
+      position: relative;
+      background: white;
+      list-style: none;
+      width: 480px;
+      padding: 16px 0 0 0;
+      margin-top: -8px;
+      border-radius: 0 0 6px 6px;
+      z-index: 1;
+    }
+
+    &__card-results {
+        margin-bottom: 32px;
+      &-blurred {
+        position: absolute;
+        top: 40%;
+        left: 8%;
+        right: 9%;
+        filter: blur(5px);
+      }
+
+      &-list {
+        display: grid;
+        grid-template-columns: repeat(4, 280px);
+        grid-auto-rows: minmax(0, auto);
+        grid-gap: 32px;
+        margin-top: 32px;
+      }
+    }
+
+    &__card {
+        display: flex;
+        flex-direction: column;
+        box-shadow: 10px 1px 25px rgba(0, 0, 0, 0.7);
+        border-radius: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        border-left: 1px solid rgba(255, 255, 255, 0.2);
+        overflow: hidden;
+    }
+
+    &__card-price-container {
+        display: flex;
+        position:relative;
+        gap: 8px;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 12px 12px 12px;
+        border-radius: 0 0 14px 14px;
+        margin-top: -14px;
+        padding-top: 20px;
+        z-index: 0;
+        span {
+            max-width: 100%;
+            font-weight: 600;
+            width: fit-content;
+            font-size: calc(10px + 0.5vw);
+        }
+
+        &-black {
+            background: rgb(23, 21, 21);
+            span {
+                color: white;
+            }
+        }
+
+        &-white {
+            background: rgb(234, 233, 233);
+            span {
+                color: black;
+            }
+        }
+
+        &-silver {
+            span {
+                color: white;
+            }
+            background: silver;
+        }
+
+        &-borderless {
+            position: relative;
+            span {
+                color: white;
+            }
+            &::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background-image: var(--bg-image);
+                background-repeat: no-repeat;
+                background-size: cover;
+                filter: blur(10px);
+                z-index: -1;
+            }
+        }
+    }
+
+    &__card-image {
+        position: relative;
+        border-radius: 15px;
+        width: 100%;
+        height: auto;
+        justify-self: center;
+        grid-column: auto;
+        grid-row: auto;
+        max-width: 100%;
+        max-height: 100%;
+        z-index: 1;
+    }
+
+    &__result-item {
+      color: black;
+      font-size: normal;
+      font-weight: 600;
+      line-height: 32px;
+      padding-left: 8px;
+      border-bottom: 1px solid #c8e4de;
+    }
+
+    &__result-item:hover {
+      background: #00ffc3;
+      color: #2b2827;
+    }
+  }
+
+.js-tilt-glare {
+    z-index: 5;
+}
+
+@keyframes search-box-animation {
+    from {
+        margin-top: 300px;
+    }
+    to {
+        margin-top: 64px;
+    }
+}
