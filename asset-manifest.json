@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.bfad577e.css",
-    "main.js": "/static/js/main.8cd820cb.js",
-    "static/js/787.77f49c56.chunk.js": "/static/js/787.77f49c56.chunk.js",
-    "index.html": "/index.html",
-    "main.bfad577e.css.map": "/static/css/main.bfad577e.css.map",
-    "main.8cd820cb.js.map": "/static/js/main.8cd820cb.js.map",
-    "787.77f49c56.chunk.js.map": "/static/js/787.77f49c56.chunk.js.map"
+    "main.css": "/mtgpricetutor/static/css/main.85b5bfcc.css",
+    "main.js": "/mtgpricetutor/static/js/main.6497b0bf.js",
+    "static/js/787.77f49c56.chunk.js": "/mtgpricetutor/static/js/787.77f49c56.chunk.js",
+    "index.html": "/mtgpricetutor/index.html",
+    "main.85b5bfcc.css.map": "/mtgpricetutor/static/css/main.85b5bfcc.css.map",
+    "main.6497b0bf.js.map": "/mtgpricetutor/static/js/main.6497b0bf.js.map",
+    "787.77f49c56.chunk.js.map": "/mtgpricetutor/static/js/787.77f49c56.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.bfad577e.css",
-    "static/js/main.8cd820cb.js"
+    "static/css/main.85b5bfcc.css",
+    "static/js/main.6497b0bf.js"
   ]
 }
