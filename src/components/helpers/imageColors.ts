@@ -3,6 +3,7 @@ const context = canvas.getContext("2d");
 
 export async function getPixelColor(imageUrl: string): Promise<string> {
     const response = await fetch(imageUrl);
+    if (response.ok) {
     const blob = await response.blob();
 
     const image = new Image();
@@ -30,6 +31,9 @@ export async function getPixelColor(imageUrl: string): Promise<string> {
     } else {
         throw new Error("Could not get canvas context");
     }
+  } else {
+    return '';
+  }
 }
 
 export const getFontColorForBackground = (backgroundColor: string) => {

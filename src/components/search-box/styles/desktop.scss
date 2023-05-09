@@ -13,17 +13,41 @@
 
     &__input-container {
         display: flex;
+        position: relative;
+    }
+    &__input-text-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
     }
 
     &__input-text {
         position: relative;
         background: white;
-        border-radius: 25px;
+        border-radius: 12px 0 0 12px;
         height: 48px;
         width: 400px;
         border: none;
         padding: 2px 16px;
-        z-index: 100;
+        z-index: 1;
+        font-family: 'MTGFont', sans-serif;
+        font-size: x-large;
+        font-weight: 600;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+        outline: none;
+    }
+
+    &__input-text-disabled {
+        position: relative;
+        background: #a0b0b2;
+        border-radius: 25px 0 0 25px;
+        color:#5d6f72;
+        height: 48px;
+        width: 400px;
+        border: none;
+        padding: 2px 16px;
+        z-index: 1;
         font-size: medium;
         font-weight: 600;
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
@@ -32,19 +56,43 @@
 
     &__button {
         position: relative;
+        width: 220px;
         margin-left: -24px;
         padding-left: 32px;
         padding-right: 16px;
-        border-radius: 0 25px 25px 0;
-        background: #00ffc3;
         color: #2b2827;
         font-weight: 600;
         font-size: large;
         border: none;
         height: 52px;
-        z-index: 10;
-        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        z-index: 0;
+        background: transparent;
+        background-image: url('../../../assets/search-button.png');
+        background-size: cover;
+        transition: background-image 300ms ease-in-out
+    }
 
+    &__button-loading {
+        position: relative;
+        width: 220px;
+        margin-left: -24px;
+        padding-left: 32px;
+        padding-right: 16px;
+        color: #2b2827;
+        font-weight: 600;
+        font-size: large;
+        border: none;
+        height: 52px;
+        z-index: 0;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        background: transparent;
+        background-image: url('../../../assets/search-button-loading.png');
+        background-size: cover;
+        animation: buttonLoading 600ms linear infinite;
+    }
+    &__button:hover {
+        background-image: url('../../../assets/search-button-hover.png');
+        transition: background-image 300ms ease-in-out;
     }
 
 }
@@ -74,6 +122,7 @@
         left: 7.8%;
         right: 9%;
         filter: blur(5px);
+        z-index: -1;
       }
 
       &-list {
@@ -113,6 +162,7 @@
             max-width: 100%;
             font-weight: 600;
             width: fit-content;
+            font-family: Helvetica, sans-serif;
             font-size: calc(10px + 0.35rem);
         }
     }
@@ -164,5 +214,18 @@
     }
     100% {
         scale: 1;
+    }
+}
+
+@keyframes buttonLoading {
+    50% {
+        background: transparent;
+        background-image: url('../../../assets/search-button-loading-active.png');
+        background-size: cover;
+    }
+    100% {
+        background: transparent;
+        background-image: url('../../../assets/search-button-loading.png');
+        background-size: cover;
     }
 }

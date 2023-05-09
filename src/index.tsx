@@ -12,7 +12,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <div className='mtg-tutor__main-container'>
-      <div className='title'>MTG PRICE TUTOR</div>
+      <div data-text='MTG PRICE TUTOR' className='title'>MTG PRICE TUTOR</div>
         <span className='subtitle'>Precios calculados según Dolar Pirulo: ${DOLAR_PIRULO}</span>
         <SearchBox />
     </div>

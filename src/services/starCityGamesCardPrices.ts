@@ -11,6 +11,7 @@ export interface Card {
 
 
 export async function getCardPrices(cardName: string) {
+  //const capitalizedCardName= cardName.replace(/\b\w/g, (letter) => letter.toUpperCase());
     const url ="https://essearchapi-na.hawksearch.com/api/v2/search";
     const options = {
         method: 'POST',
