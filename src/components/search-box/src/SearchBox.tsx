@@ -75,7 +75,7 @@ const SearchBox = () => {
     <form className={selectedCards.length > 0 ? 'search-box__with-results' : 'search-box'} onSubmit={onSubmit}>
       <div className={'search-box__input-container'}>
         <div className='search-box__input-text-container'>
-        <input name='searchInput' className={isLoading ? 'search-box__input-text-disabled' : 'search-box__input-text'} type="text" value={searchTerm} ref={inputRef} onChange={onInputChange} autoComplete="off" disabled={isLoading}/>
+        <input name='searchInput' className={isLoading ? 'search-box__input-text-disabled' : 'search-box__input-text'} type="text" value={searchTerm} ref={inputRef} onChange={onInputChange} autoComplete="off" placeholder="las mayúsculas y minúsculas importan..." disabled={isLoading}/>
         <LoadingIndicator isLoading={isLoading}/>
         </div>
         <button className={isLoading ? 'search-box__button-loading' :'search-box__button'} type='submit'disabled={isLoading}/>

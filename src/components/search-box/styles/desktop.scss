@@ -37,7 +37,11 @@
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
         outline: none;
     }
-
+    &__input-text::-webkit-input-placeholder { /* Safari and Chrome */
+        font-size: large;
+        font-weight: 100;
+        color: #a0b0b2;
+      }
     &__input-text-disabled {
         position: relative;
         background: #a0b0b2;
