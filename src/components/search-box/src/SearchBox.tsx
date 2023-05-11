@@ -79,7 +79,7 @@ const SearchBox = () => {
     let cardName = '';
 
     inputValue && searchResults.forEach((cardSuggestion: string) => {
-      if (cardSuggestion.toLowerCase() === inputValue.toLowerCase()) {
+      if (cardSuggestion.toLowerCase() === inputValue.toLowerCase().trim()) {
         cardName = cardSuggestion;
       }
     });
