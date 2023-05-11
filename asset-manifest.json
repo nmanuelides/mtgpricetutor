@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/mtgpricetutor/static/css/main.0267daa1.css",
-    "main.js": "/mtgpricetutor/static/js/main.ae3d2710.js",
-    "static/js/787.77f49c56.chunk.js": "/mtgpricetutor/static/js/787.77f49c56.chunk.js",
-    "static/media/page-bg11.jpg": "/mtgpricetutor/static/media/page-bg11.f1643016a033502477cc.jpg",
-    "static/media/Beleren2016-Bold.ttf": "/mtgpricetutor/static/media/Beleren2016-Bold.2ceb65923c91913395fa.ttf",
-    "static/media/search-button-hover.png": "/mtgpricetutor/static/media/search-button-hover.7bae0aa19801845ad2bd.png",
-    "static/media/search-button-loading-active.png": "/mtgpricetutor/static/media/search-button-loading-active.1f691a0ced1b416bfbcf.png",
-    "static/media/search-button.png": "/mtgpricetutor/static/media/search-button.5a47d811168dcec22981.png",
-    "static/media/search-button-loading.png": "/mtgpricetutor/static/media/search-button-loading.1321bc34960ec86b05f6.png",
-    "index.html": "/mtgpricetutor/index.html",
-    "main.0267daa1.css.map": "/mtgpricetutor/static/css/main.0267daa1.css.map",
-    "main.ae3d2710.js.map": "/mtgpricetutor/static/js/main.ae3d2710.js.map",
-    "787.77f49c56.chunk.js.map": "/mtgpricetutor/static/js/787.77f49c56.chunk.js.map"
+    "main.css": "/static/css/main.0b4a3803.css",
+    "main.js": "/static/js/main.80f162e2.js",
+    "static/js/787.77f49c56.chunk.js": "/static/js/787.77f49c56.chunk.js",
+    "static/media/page-bg11.jpg": "/static/media/page-bg11.f1643016a033502477cc.jpg",
+    "static/media/Beleren2016-Bold.ttf": "/static/media/Beleren2016-Bold.2ceb65923c91913395fa.ttf",
+    "static/media/search-button-hover.png": "/static/media/search-button-hover.7bae0aa19801845ad2bd.png",
+    "static/media/search-button-loading-active.png": "/static/media/search-button-loading-active.1f691a0ced1b416bfbcf.png",
+    "static/media/search-button.png": "/static/media/search-button.5a47d811168dcec22981.png",
+    "static/media/search-button-loading.png": "/static/media/search-button-loading.1321bc34960ec86b05f6.png",
+    "index.html": "/index.html",
+    "main.0b4a3803.css.map": "/static/css/main.0b4a3803.css.map",
+    "main.80f162e2.js.map": "/static/js/main.80f162e2.js.map",
+    "787.77f49c56.chunk.js.map": "/static/js/787.77f49c56.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0267daa1.css",
-    "static/js/main.ae3d2710.js"
+    "static/css/main.0b4a3803.css",
+    "static/js/main.80f162e2.js"
   ]
 }
