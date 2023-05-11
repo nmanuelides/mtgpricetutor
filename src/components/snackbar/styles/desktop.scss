@@ -19,3 +19,10 @@ $border-radius: 12px;
       'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
       sans-serif;
 }
+
+@keyframes showFromBottom {
+    0% {
+        bottom: -30%;
+    }
+
+}
