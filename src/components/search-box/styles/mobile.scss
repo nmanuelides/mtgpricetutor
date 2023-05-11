@@ -37,7 +37,7 @@
 }
 
 .search-suggestions-container {
-    &__list {
+    &__list-visible {
         width: 80svw;
         margin-top: -64px;
         padding-top: 72px;
@@ -56,11 +56,10 @@
 
         &-blurred {
         position: absolute;
-        top: 16%;
-        left: 12.5%;
-        right: 9%;
+        width: 100%;
         filter: blur(5px);
-            }
+        z-index: -1;
+        }
 
         &-list {
             display: grid;

@@ -162,9 +162,9 @@
 
       &-blurred {
         position: absolute;
-        top: 16%;
-        left: 7.8%;
-        right: 9%;
+        top: 30%;
+        left: 50%;
+        transform: translateX(-50%);
         filter: blur(5px);
         z-index: -1;
       }
