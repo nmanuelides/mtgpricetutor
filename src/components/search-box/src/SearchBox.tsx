@@ -8,6 +8,8 @@ import { getFontColorForBackground } from "../../helpers/imageColors";
 import '../styles/desktop.scss';
 import '../styles/mobile.scss';
 import LoadingIndicator from "../../loading-indicator/src/LoadingIndicator";
+import Snackbar from "../../snackbar/src/Snackbar";
+import { ShowSnackbarContext } from "../../../contexts/showSnackbarContext";
 
 const SearchBox = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -15,6 +17,9 @@ const SearchBox = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
   const [selectedCards, setSelectedCards] = useState<Card[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [finishedSearching, setFinishedSearching] = useState(true)
 
   const debouncedSearchHandler = useRef(
     debounce(async (searchTerm: string) => {
@@ -38,10 +43,11 @@ const SearchBox = () => {
     const searchTerm = e.target.value;
     if (!searchTerm) {
       setSearchTerm('');
-      setSearchResults([]);
+      //setSearchResults([]);
       setSelectedCards([])
       return;
     }
+    setFinishedSearching(false);
     setSearchTerm(searchTerm);
     debouncedSearchHandler(searchTerm);
   }
@@ -50,6 +56,7 @@ const SearchBox = () => {
     const cardName = searchResults[selectedCardIndex];
     setSearchResults([]);
     setIsLoading(true)
+    setFinishedSearching(true);
     try {
       console.log('onCardSelected searching for: '+cardName)
       const results = await getCardPrices(cardName);
@@ -64,6 +71,11 @@ const SearchBox = () => {
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const inputValue = inputRef.current?.value;
+    if(!inputValue) {
+      setSnackbarMessage('Tienes que ingresar el nombre de una carta para poder buscarla.');
+      setShowSnackbar(true);
+      return;
+    }
     let cardName = '';
 
     inputValue && searchResults.forEach((cardSuggestion: string) => {
@@ -73,9 +85,11 @@ const SearchBox = () => {
     });
 
     if (!cardName) {
+      setSnackbarMessage('La carta que ingresaste no existe o su nombre está mal escrito.');
+      setShowSnackbar(true);
       return;
     }
-    setSearchResults([]);
+    setFinishedSearching(true);
     debouncedSearchHandler.cancel();
     setIsLoading(true);
     try {
@@ -89,24 +103,25 @@ const SearchBox = () => {
     }
   };
   return (
+    <ShowSnackbarContext.Provider value={{showSnackbar, setShowSnackbar}}>
     <form className={selectedCards.length > 0 ? 'search-box__with-results' : 'search-box'} onSubmit={onSubmit}>
       <div className={'search-box__input-container'}>
         <div className='search-box__input-text-container'>
         <input name='searchInput' className={isLoading ? 'search-box__input-text-disabled' : 'search-box__input-text'} type="text" value={searchTerm} ref={inputRef} onChange={onInputChange} autoComplete="off" placeholder="Ingresá el nombre de una carta" disabled={isLoading}/>
         <LoadingIndicator isLoading={isLoading}/>
         </div>
-        <button className={isLoading ? 'search-box__button-loading' :'search-box__button'} type='submit'disabled={isLoading}/>
+        <button className={isLoading ? 'search-box__button-loading' :'search-box__button'} type='submit'disabled={isLoading}></button>
       </div>
-      <div className={'search-results-container'}>
       {searchResults.length > 0 &&
-        <ul className={'search-results-container__list'}>
+        <ul className={!finishedSearching ? 'search-suggestions-container__list-visible' : 'search-suggestions-container__list-invisible'}>
           {searchResults.map((cardSuggestion, index) => {
-            return <li className={'search-results-container__result-item'} key={cardSuggestion} onClick={() => onCardSelected(index)}>{cardSuggestion}</li>
+            return <li className={'search-suggestions-container__result-item'} key={cardSuggestion} onClick={() => onCardSelected(index)}>{cardSuggestion}</li>
           })}
         </ul>
       }
+    <div className={'search-results-container'}>
       {selectedCards.length > 0 && (
-        <div className={searchResults.length > 0 ? 'search-results-container__card-results-blurred' :'search-results-container__card-results'}>
+        <div className={finishedSearching ? 'search-results-container__card-results': 'search-results-container__card-results-blurred'}>
         <div className={'search-results-container__card-results-list'}>
           {selectedCards.map((card: Card) => {
             if (card.borderColor.length > 0) {
@@ -129,6 +144,8 @@ const SearchBox = () => {
       )}
       </div>
     </form>
+    <Snackbar message={snackbarMessage}/>
+    </ShowSnackbarContext.Provider>
   );
 }
 

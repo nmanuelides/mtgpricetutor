@@ -15,6 +15,18 @@
         display: flex;
         position: relative;
     }
+
+    &__input-container::before {
+        content: '';
+        position: absolute;
+        width: 99.5%;
+        height: 94%;
+        top: 2px;
+        left: 0;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.6);
+        border-radius: 20px;
+    }
+
     &__input-text-container {
         display: flex;
         align-items: center;
@@ -30,12 +42,11 @@
         width: 400px;
         border: none;
         padding: 2px 16px;
-        z-index: 2;
         font-family: 'MTGFont', sans-serif;
         font-size: x-large;
         font-weight: 600;
-        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
         outline: none;
+        z-index: 2;
     }
     &__input-text::-webkit-input-placeholder { /* Safari and Chrome */
         font-size: large;
@@ -45,17 +56,17 @@
     &__input-text-disabled {
         position: relative;
         background: #a0b0b2;
-        border-radius: 25px 0 0 25px;
-        color:#5d6f72;
+        color:#7f989d;
         height: 48px;
         width: 400px;
         border: none;
+        border-radius: 12px 0 0 12px;
         padding: 2px 16px;
-        z-index: 1;
         font-size: medium;
         font-weight: 600;
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
         outline: none;
+        z-index: 2;
     }
 
     &__button {
@@ -69,11 +80,11 @@
         font-size: large;
         border: none;
         height: 52px;
-        z-index: 1;
         background: transparent;
         background-image: url('../../../assets/search-button.png');
         background-size: cover;
-        transition: background-image 300ms ease-in-out
+        transition: background-image 300ms ease-in-out;
+        z-index: 1;
     }
 
     &__button-loading {
@@ -87,12 +98,12 @@
         font-size: large;
         border: none;
         height: 52px;
-        z-index: 0;
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
         background: transparent;
         background-image: url('../../../assets/search-button-loading.png');
         background-size: cover;
         animation: buttonLoading 600ms linear infinite;
+        z-index: 0;
     }
     &__button:hover {
         background-image: url('../../../assets/search-button-hover.png');
@@ -101,16 +112,16 @@
 
 }
 
-.search-results-container {
+.search-suggestions-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
 
-    &__list {
+    &__list-visible {
       position: relative;
-      background: white;
+      background: #a0b0b2;
       list-style: none;
       width: 94%;
       padding: 16px 0 0 0;
@@ -119,8 +130,36 @@
       z-index: 0;
     }
 
+    &__list-invisible {
+        display: none;
+    }
+
+    &__result-item:not(:last-child) {
+        border-bottom: 1px solid #e0f0f3;
+    }
+    &__result-item:last-child {
+        border-radius: 0 0 6px 6px;
+    }
+    &__result-item {
+        background: white;
+        color: black;
+        font-size: large;
+        font-weight: 600;
+        line-height: 32px;
+        padding-left: 8px;
+        cursor: pointer;
+      }
+
+      &__result-item:hover {
+        background: #5d6f72;
+        color: white;
+      }
+  }
+
+  .search-results-container {
     &__card-results {
         margin-bottom: 32px;
+
       &-blurred {
         position: absolute;
         top: 16%;
@@ -184,28 +223,7 @@
         max-height: 100%;
         z-index: 1;
     }
-
-    &__result-item:not(:last-child) {
-        border-bottom: 1px solid #e0f0f3;
-    }
-    &__result-item:last-child {
-        border-radius: 0 0 6px 6px;
-    }
-    &__result-item {
-        color: black;
-        font-size: large;
-        font-weight: 600;
-        line-height: 32px;
-        padding-left: 8px;
-        cursor: pointer;
-      }
-
-      &__result-item:hover {
-        background: #5d6f72;
-        color: white;
-      }
   }
-
 .js-tilt-glare {
     z-index: 5;
 }

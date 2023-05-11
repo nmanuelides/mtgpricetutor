@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/mtgpricetutor/static/css/main.1a4e51c2.css",
-    "main.js": "/mtgpricetutor/static/js/main.474884b4.js",
+    "main.css": "/mtgpricetutor/static/css/main.e4bad90f.css",
+    "main.js": "/mtgpricetutor/static/js/main.ae3d2710.js",
     "static/js/787.77f49c56.chunk.js": "/mtgpricetutor/static/js/787.77f49c56.chunk.js",
     "static/media/page-bg11.jpg": "/mtgpricetutor/static/media/page-bg11.f1643016a033502477cc.jpg",
     "static/media/Beleren2016-Bold.ttf": "/mtgpricetutor/static/media/Beleren2016-Bold.2ceb65923c91913395fa.ttf",
@@ -10,12 +10,12 @@
     "static/media/search-button.png": "/mtgpricetutor/static/media/search-button.5a47d811168dcec22981.png",
     "static/media/search-button-loading.png": "/mtgpricetutor/static/media/search-button-loading.1321bc34960ec86b05f6.png",
     "index.html": "/mtgpricetutor/index.html",
-    "main.1a4e51c2.css.map": "/mtgpricetutor/static/css/main.1a4e51c2.css.map",
-    "main.474884b4.js.map": "/mtgpricetutor/static/js/main.474884b4.js.map",
+    "main.e4bad90f.css.map": "/mtgpricetutor/static/css/main.e4bad90f.css.map",
+    "main.ae3d2710.js.map": "/mtgpricetutor/static/js/main.ae3d2710.js.map",
     "787.77f49c56.chunk.js.map": "/mtgpricetutor/static/js/787.77f49c56.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.1a4e51c2.css",
-    "static/js/main.474884b4.js"
+    "static/css/main.e4bad90f.css",
+    "static/js/main.ae3d2710.js"
   ]
 }
