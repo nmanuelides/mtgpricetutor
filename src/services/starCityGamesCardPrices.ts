@@ -50,7 +50,7 @@ export async function getAutoCompleteSuggestions(searchValue: string) {
     });
     return suggestions;
   } catch(error) {
-    console.log(error);
+    console.error(error);
   }
 }
 

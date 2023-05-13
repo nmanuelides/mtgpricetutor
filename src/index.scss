@@ -1,3 +1,5 @@
+$page-background: url('./assets/page-bg27.jpg');
+
 @font-face {
   font-family: 'MTGFont';
   src: url('./assets/Beleren2016-Bold.ttf') format('truetype'),
@@ -6,8 +8,9 @@
 body {
   display: flex;
   justify-content: center;
-  background-image: url('./assets/page-bg11.jpg');
+  background-image: $page-background;
   background-size: cover;
+  background-position: center 10%;
   height: 100svh;
   margin: 0;
   font-family: 'MTGFont', sans-serif;
@@ -55,7 +58,19 @@ code {
     top: 0%;
     left: 0%;
     color: transparent;
-    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 1);
+    -webkit-text-stroke: 1.5px white;
+    z-index: 2;
+    mix-blend-mode: normal;
+    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .title::before {
+    content: 'MTG PRICE TUTOR';
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    color: transparent;
+    -webkit-text-stroke: 1.5px white;
     z-index: 2;
     mix-blend-mode: normal;
     text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
@@ -73,9 +88,9 @@ code {
   body {
     display: flex;
     justify-content: center;
-    background-image: url('./assets/page-bg11.jpg');
+    background-image: $page-background;
     background-size: cover;
-    background-position: center center ;
+    background-position: center center;
     margin: 0;
     font-family: 'MTGFont', sans-serif;
     -webkit-font-smoothing: antialiased;

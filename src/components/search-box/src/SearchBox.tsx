@@ -10,8 +10,12 @@ import '../styles/mobile.scss';
 import LoadingIndicator from "../../loading-indicator/src/LoadingIndicator";
 import Snackbar from "../../snackbar/src/Snackbar";
 import { ShowSnackbarContext } from "../../../contexts/showSnackbarContext";
+import ReactGA from 'react-ga';
+import {useTracking} from '../../../hooks/useTracking'
 
 const SearchBox = () => {
+  ReactGA.initialize('G-BCJBPHNW14');
+  const {trackSearchEvent} = useTracking();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState<string[]>([]);
@@ -58,7 +62,7 @@ const SearchBox = () => {
     setIsLoading(true)
     setFinishedSearching(true);
     try {
-      console.log('onCardSelected searching for: '+cardName)
+      trackSearchEvent(cardName);
       const results = await getCardPrices(cardName);
       setSelectedCards(results);
     } catch (error) {
@@ -93,7 +97,7 @@ const SearchBox = () => {
     debouncedSearchHandler.cancel();
     setIsLoading(true);
     try {
-      console.log('onSubmit searching for: '+cardName)
+      trackSearchEvent(cardName);
       const results = await getCardPrices(cardName);
       setSelectedCards(results);
     } catch (error) {
