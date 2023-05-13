@@ -14,7 +14,6 @@ import ReactGA from 'react-ga';
 import {useTracking} from '../../../hooks/useTracking'
 
 const SearchBox = () => {
-  ReactGA.initialize('G-CF7ZCPKRC3');
   const {trackSearchEvent} = useTracking();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -36,6 +35,9 @@ const SearchBox = () => {
     }, 250)
   ).current;
 
+  useEffect(() => {
+    ReactGA.initialize('G-CF7ZCPKRC3');
+  }, []);
 
   useEffect(() => {
     if(searchTerm !== ''){
