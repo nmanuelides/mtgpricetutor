@@ -3,6 +3,9 @@
 .search-box {
     width: 100svw;
 
+    &__with-results {
+        width: 100%;
+    }
     &__input-container {
         width: 100%;
         display: flex;
@@ -30,17 +33,19 @@
         border-radius: 12px;
     }
     &__button {
-        position: relative;
-        margin-left: 0;
-        z-index: 1;
+        display: none;
+    }
+    &__button-loading {
+        display: none;
     }
 }
 
 .search-suggestions-container {
     &__list-visible {
         width: 80svw;
-        margin-top: -64px;
-        padding-top: 72px;
+    }
+    &__result-item {
+        padding: 12px;
     }
 }
 
@@ -53,9 +58,10 @@
         border-radius: 13px;
     }
     &__card-results {
-
+        width: 100%;
         &-blurred {
         position: absolute;
+        top: 22%;
         width: 100%;
         filter: blur(5px);
         z-index: -1;
@@ -63,11 +69,16 @@
 
         &-list {
             display: grid;
-            grid-template-columns: repeat(2, 40%);
+            grid-template-columns: repeat(2, 45%);
             grid-auto-rows: auto;
             grid-gap: 16px;
             margin-top: 32px;
             justify-content: center;
+            }
+        }
+        &__card-price-container {
+            &-pesos {
+                font-size: 14px;
             }
         }
     }

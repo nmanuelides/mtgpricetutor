@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { CSSProperties, useEffect, useRef, useState } from "react";
 import { debounce } from "lodash";
 import { getCardPrices, getAutoCompleteSuggestions, Card } from "../../../services/starCityGamesCardPrices";
 import Tilt from '../../../hoc/Tilt';
@@ -11,7 +11,9 @@ import LoadingIndicator from "../../loading-indicator/src/LoadingIndicator";
 import Snackbar from "../../snackbar/src/Snackbar";
 import { ShowSnackbarContext } from "../../../contexts/showSnackbarContext";
 import ReactGA from 'react-ga';
-import {useTracking} from '../../../hooks/useTracking'
+import {useTracking} from '../../../hooks/useTracking';
+import buttonImg from '../../../assets/search-button.png';
+import buttonLoadingImg from '../../../assets/search-button-loading-active.png';
 
 const SearchBox = () => {
   const {trackSearchEvent} = useTracking();
@@ -108,6 +110,39 @@ const SearchBox = () => {
       setIsLoading(false);
     }
   };
+
+  const getPriceSize = (span: HTMLElement | null) => {
+    let priceWidth = 62;
+    if (span) {
+      priceWidth = span?.offsetWidth;
+    }
+    return priceWidth;
+  }
+
+  const getFontSizeForSpan = (span: HTMLElement | null) => {
+    const elementWidth = getPriceSize(span);
+    const minWidth = 44;
+    const maxWidth = 80;
+    const minFontSize = 8;
+    const maxFontSize = 16;
+    let fontSize;
+    const isDesktop = window.innerWidth >= 768
+    if(isDesktop) {
+      return fontSize = 18;
+    }
+    if (elementWidth >= maxWidth) {
+      fontSize = minFontSize;
+    } else if (elementWidth <= minWidth) {
+      fontSize = maxFontSize;
+    } else {
+      const widthRange = maxWidth - minWidth;
+      const widthDifference = maxWidth - elementWidth;
+      const fontSizeDifference = maxFontSize - minFontSize;
+      fontSize = minFontSize + (fontSizeDifference * widthDifference) / widthRange;
+    }
+    return fontSize;
+  }
+
   return (
     <ShowSnackbarContext.Provider value={{showSnackbar, setShowSnackbar}}>
     <form className={selectedCards.length > 0 ? 'search-box__with-results' : 'search-box'} onSubmit={onSubmit}>
@@ -116,7 +151,9 @@ const SearchBox = () => {
         <input name='searchInput' className={isLoading ? 'search-box__input-text-disabled' : 'search-box__input-text'} type="text" value={searchTerm} ref={inputRef} onChange={onInputChange} autoComplete="off" placeholder="Ingresá el nombre de una carta" disabled={isLoading}/>
         <LoadingIndicator isLoading={isLoading}/>
         </div>
-        <button className={isLoading ? 'search-box__button-loading' :'search-box__button'} type='submit'disabled={isLoading}></button>
+        <button className={'search-box__button'} type='submit'disabled={isLoading}>
+          <img className={'search-box__button-image'} src={isLoading ? buttonLoadingImg : buttonImg}/>
+        </button>
       </div>
       {searchResults.length > 0 &&
         <ul className={!finishedSearching ? 'search-suggestions-container__list-visible' : 'search-suggestions-container__list-invisible'}>
@@ -129,17 +166,23 @@ const SearchBox = () => {
       {selectedCards.length > 0 && (
         <div className={finishedSearching ? 'search-results-container__card-results': 'search-results-container__card-results-blurred'}>
         <div className={'search-results-container__card-results-list'}>
-          {selectedCards.map((card: Card) => {
+          {selectedCards.map((card: Card, index) => {
             if (card.borderColor.length > 0) {
+
+              const dollarPriceId = `dollarPrice${index}`;
+              const pesosPriceId = `pesosPrice${index}`;
+              const dollarSpan = document.getElementById(dollarPriceId);
+              const pesosSpan = document.getElementById(pesosPriceId);
               const contrastingColor = getFontColorForBackground(card.borderColor);
               const priceStyle = { background: card.borderColor, color: contrastingColor };
-              const arsPriceStyle = {border: `2px solid ${contrastingColor}`, borderRadius:'8px', padding:'4px'}
+              const arsPriceStyle = { border: `2px solid ${contrastingColor}`, borderRadius: '8px', padding: '4px', fontSize: `${getFontSizeForSpan(pesosSpan)}px`};
+              const dollarsStyle: CSSProperties = { fontSize: `${getFontSizeForSpan(dollarSpan)}px` };
               return (
                 <Tilt options={tiltOptions} className="search-results-container__card" key={card.image}>
                   <img src={card.image} alt="Example image" className={'search-results-container__card-image'} key={card.image}/>
                   <div className={'search-results-container__card-price-container'} style={priceStyle}>
-                    <span>US${card.price}</span>
-                    <span style={arsPriceStyle} >AR${(parseFloat(card.price)*DOLAR_PIRULO).toFixed(2)}</span>
+                    <span id={dollarPriceId} className='search-results-container__card-price-container-dollars' style={dollarsStyle}>US${card.price}</span>
+                    <span id={pesosPriceId}className='search-results-container__card-price-container-pesos' style={arsPriceStyle} >AR${(parseFloat(card.price)*DOLAR_PIRULO).toFixed(2)}</span>
                   </div>
                 </Tilt>
               )
