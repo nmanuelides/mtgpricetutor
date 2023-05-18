@@ -22,7 +22,7 @@ const App = () => {
           </div>
           <span className='subtitle'>Precios de Star City Games</span>
           <span className='subtitle'>
-            Valor en pesos calculado segun dólar:
+            Valor en pesos calculados según dólar:
           </span>
           <DollarValueInput />
           <SearchBox />
