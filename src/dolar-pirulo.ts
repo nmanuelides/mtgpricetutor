@@ -1,1 +1,1 @@
-export const DOLAR_PIRULO = 470;
+export const DOLAR_PIRULO: number = 470;

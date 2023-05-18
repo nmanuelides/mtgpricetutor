@@ -1,0 +1,85 @@
+.dollar-value-input-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 16px;
+        height: 48px;
+        width: 20%;
+        box-shadow: 0 0px 20px rgba(0,0,0,0.6);
+        border-radius: 12px;
+
+        .input-container {
+            display: flex;
+            align-items: center;
+            background: white;
+            border: none;
+            border-radius: 12px 0 0 12px;
+            overflow: hidden;
+            max-width: 50%;
+            max-height: 100%;
+            z-index: 100;
+
+            .prefix {
+                color: rgb(96, 96, 96);
+                font-size: 2rem;
+                padding: 8px 8px 8px 10px;
+                background: white;
+                width: 20%;
+            }
+
+            .input {
+                border: none;
+                outline: none;
+                height: 100%;
+                max-width: 80%;
+                padding: 4px;
+                font-size: 1.4rem;
+                font-weight: 600;
+                font-family: 'MTGFont', sans-serif;
+                box-sizing: border-box;
+                overflow: hidden;
+            }
+            .input[type="number"] {
+                /* Remove default arrow styles */
+                -moz-appearance: textfield; /* Firefox */
+                appearance: textfield; /* Other browsers */
+              }
+
+              /* Remove spinner arrows on WebKit browsers */
+              .input[type="number"]::-webkit-inner-spin-button,
+              .input[type="number"]::-webkit-outer-spin-button {
+                -webkit-appearance: none;
+                appearance: none;
+              }
+        }
+
+        .input-container:focus-within {
+            border-color: red;
+        }
+        button {
+            display: flex;
+            justify-content:center;
+            align-items: center;
+            border: none;
+            border-radius: 0 12px 12px 0;
+            background: rgba(white, 0.2);
+            color: white;
+            height: 100%;
+            width: 50%;
+            font-size: 1.4rem;
+            font-family: 'MTGFont', sans-serif;
+            padding: 12px;
+            transition: background 0.3s;
+            transition: font-size 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background: rgba(black, 0.5);
+            font-size: 1.8rem;
+        }
+
+        button:active {
+            font-size: 1.6rem;
+            background: rgba(black, 0.75);
+        }
+    }

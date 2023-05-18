@@ -1,13 +1,14 @@
-import React, { FC, useContext, useEffect, useState } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import '../styles/desktop.scss';
 import '../styles/mobile.scss';
 import {ShowSnackbarContext} from '../../../contexts/showSnackbarContext';
 
-interface SnackbarProps {
+export interface SnackbarProps {
   message: string;
+  type: 'error' | 'success';
 }
 
-const Snackbar: FC<SnackbarProps> = ({ message }) => {
+const Snackbar: FC<SnackbarProps> = ({ message, type }) => {
   const [visible, setVisible] = useState(false);
   const {showSnackbar, setShowSnackbar} = useContext(ShowSnackbarContext);
 
@@ -23,12 +24,12 @@ const Snackbar: FC<SnackbarProps> = ({ message }) => {
         clearTimeout(timer);
       };
     }
-  }, [showSnackbar]);
+  }, [showSnackbar, setShowSnackbar]);
 
   return (
     <>
       {visible && (
-        <div className='snackbar'>
+        <div className={type === 'error' ? 'snackbar snackbar-error' : 'snackbar snackbar-success'}>
           {message}
         </div>
       )}

@@ -1,19 +1,19 @@
-import React, { CSSProperties, useEffect, useRef, useState } from "react";
+import React, { CSSProperties, useEffect, useRef, useState, useContext } from "react";
 import { debounce } from "lodash";
 import { getCardPrices, getAutoCompleteSuggestions, Card } from "../../../services/starCityGamesCardPrices";
 import Tilt from '../../../hoc/Tilt';
 import { tiltOptions } from "../../../hoc/tiltOptions";
-import { DOLAR_PIRULO } from "../../../dolar-pirulo";
 import { getFontColorForBackground } from "../../helpers/imageColors";
 import '../styles/desktop.scss';
 import '../styles/mobile.scss';
 import LoadingIndicator from "../../loading-indicator/src/LoadingIndicator";
-import Snackbar from "../../snackbar/src/Snackbar";
+import Snackbar, { SnackbarProps } from "../../snackbar/src/Snackbar";
 import { ShowSnackbarContext } from "../../../contexts/showSnackbarContext";
 import ReactGA from 'react-ga';
 import {useTracking} from '../../../hooks/useTracking';
 import buttonImg from '../../../assets/search-button.png';
 import buttonLoadingImg from '../../../assets/search-button-loading-active.png';
+import { DollarValueContext } from "../../../contexts/dollarValueContext";
 
 const SearchBox = () => {
   const {trackSearchEvent} = useTracking();
@@ -24,7 +24,9 @@ const SearchBox = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarType] = useState<SnackbarProps['type']>('error');
   const [finishedSearching, setFinishedSearching] = useState(true)
+  const {savedDollarValue} = useContext(DollarValueContext);
 
   const debouncedSearchHandler = useRef(
     debounce(async (searchTerm: string) => {
@@ -51,7 +53,6 @@ const SearchBox = () => {
     const searchTerm = e.target.value;
     if (!searchTerm) {
       setSearchTerm('');
-      //setSearchResults([]);
       setSelectedCards([])
       return;
     }
@@ -148,17 +149,33 @@ const SearchBox = () => {
     <form className={selectedCards.length > 0 ? 'search-box__with-results' : 'search-box'} onSubmit={onSubmit}>
       <div className={'search-box__input-container'}>
         <div className='search-box__input-text-container'>
-        <input name='searchInput' className={isLoading ? 'search-box__input-text-disabled' : 'search-box__input-text'} type="text" value={searchTerm} ref={inputRef} onChange={onInputChange} autoComplete="off" placeholder="Ingresá el nombre de una carta" disabled={isLoading}/>
+        <input
+          name='searchInput'
+          className={isLoading ? 'search-box__input-text-disabled' : 'search-box__input-text'}
+          type="text"
+          value={searchTerm}
+          ref={inputRef}
+          onChange={onInputChange}
+          autoComplete="off"
+          placeholder="Ingresá el nombre de una carta..."
+          disabled={isLoading}
+        />
         <LoadingIndicator isLoading={isLoading}/>
         </div>
         <button className={'search-box__button'} type='submit'disabled={isLoading}>
-          <img className={'search-box__button-image'} src={isLoading ? buttonLoadingImg : buttonImg}/>
+          <img className={'search-box__button-image'} src={isLoading ? buttonLoadingImg : buttonImg} alt='search button'/>
         </button>
       </div>
       {searchResults.length > 0 &&
         <ul className={!finishedSearching ? 'search-suggestions-container__list-visible' : 'search-suggestions-container__list-invisible'}>
           {searchResults.map((cardSuggestion, index) => {
-            return <li className={'search-suggestions-container__result-item'} key={cardSuggestion} onClick={() => onCardSelected(index)}>{cardSuggestion}</li>
+            return  <li
+                      className={'search-suggestions-container__result-item'}
+                      key={cardSuggestion}
+                      onClick={() => onCardSelected(index)}
+                    >
+                      {cardSuggestion}
+                    </li>
           })}
         </ul>
       }
@@ -177,12 +194,24 @@ const SearchBox = () => {
               const priceStyle = { background: card.borderColor, color: contrastingColor };
               const arsPriceStyle = { border: `2px solid ${contrastingColor}`, borderRadius: '8px', padding: '4px', fontSize: `${getFontSizeForSpan(pesosSpan)}px`};
               const dollarsStyle: CSSProperties = { fontSize: `${getFontSizeForSpan(dollarSpan)}px` };
+              const priceInPesos= (parseFloat(card.price) * savedDollarValue).toFixed(2);
+              console.log('PRICE IN PESOS: '+priceInPesos);
               return (
                 <Tilt options={tiltOptions} className="search-results-container__card" key={card.image}>
-                  <img src={card.image} alt="Example image" className={'search-results-container__card-image'} key={card.image}/>
+                  <img src={card.image} alt="Card image" className={'search-results-container__card-image'} key={card.image}/>
                   <div className={'search-results-container__card-price-container'} style={priceStyle}>
-                    <span id={dollarPriceId} className='search-results-container__card-price-container-dollars' style={dollarsStyle}>US${card.price}</span>
-                    <span id={pesosPriceId}className='search-results-container__card-price-container-pesos' style={arsPriceStyle} >AR${(parseFloat(card.price)*DOLAR_PIRULO).toFixed(2)}</span>
+                    <span
+                      id={dollarPriceId}
+                      className='search-results-container__card-price-container-dollars'
+                      style={dollarsStyle}>
+                        US${card.price}
+                    </span>
+                    <span
+                      id={pesosPriceId}
+                      className='search-results-container__card-price-container-pesos'
+                      style={arsPriceStyle}>
+                        AR${priceInPesos}
+                    </span>
                   </div>
                 </Tilt>
               )
@@ -193,7 +222,7 @@ const SearchBox = () => {
       )}
       </div>
     </form>
-    <Snackbar message={snackbarMessage}/>
+    <Snackbar message={snackbarMessage} type={snackbarType}/>
     </ShowSnackbarContext.Provider>
   );
 }

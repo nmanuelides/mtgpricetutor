@@ -1,0 +1,63 @@
+@media (max-width: 768px) {
+.dollar-value-input-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 8px;
+    height: 48px;
+    width: 50%;
+    box-shadow: 0 0px 20px rgba(0,0,0,0.6);
+    border-radius: 12px;
+
+    .input-container {
+        display: flex;
+        align-items: center;
+        background: white;
+        border: none;
+        border-radius: 12px 0 0 12px;
+        overflow: hidden;
+        max-width: 50%;
+        max-height: 100%;
+        z-index: 100;
+
+        .prefix {
+            color: rgb(96, 96, 96);
+            font-size: 2rem;
+            padding: 8px 8px 8px 10px;
+            background: white;
+            width: 20%;
+        }
+
+        .input {
+            border: none;
+            outline: none;
+            height: 100%;
+            max-width: 80%;
+            padding: 4px;
+            font-size: 1.4rem;
+            font-weight: 600;
+            font-family: 'MTGFont', sans-serif;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+    }
+
+    .input-container:focus-within {
+        border-color: red;
+    }
+    button {
+        display: flex;
+        justify-content:center;
+        align-items: center;
+        border: none;
+        border-radius: 0 12px 12px 0;
+        background: rgba(white, 0.2);
+        color: black;
+        height: 100%;
+        width: 50%;
+        font-size: 1.4rem;
+        font-family: 'MTGFont', sans-serif;
+        padding: 12px;
+    }
+}
+}
