@@ -31,13 +31,13 @@ const [userInput, setUserInput] = useState(DOLAR_PIRULO.toString());
     const handleDollarValueSaved = () => {
         if(userInput && parseFloat(userInput) > 0) {
             setSnackbarType('success');
-            setSnackbarMessage('Nuevo valor del dolar guardado!')
+            setSnackbarMessage('Nuevo valor del dólar guardado!')
             setShowSnackbar(true);
             setSavedDollarValue(parseFloat(userInput));
             Cookies.set(SAVED_DOLLAR_VALUE_KEY, userInput);
         } else {
             setSnackbarType('error');
-            setSnackbarMessage("El valor del dolar no puede ser $0 ni estar vacío.");
+            setSnackbarMessage("El valor del dólar no puede ser $0 ni estar vacío.");
             setShowSnackbar(true);
         }
     }
