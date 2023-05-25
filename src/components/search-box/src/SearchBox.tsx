@@ -211,11 +211,16 @@ const SearchBox = () => {
               const pesosSpan = document.getElementById(pesosPriceId);
 
               const contrastingColor = getFontColorForBackground(card.borderColor);
-              const priceStyle = { background: card.borderColor, color: contrastingColor };
+              const priceInDollars: string = getUSDPrice(card);
+              const priceStyle = { background: card.borderColor, color: priceInDollars === OUT_OF_STOCK ? '#FF0000': contrastingColor };
               const arsPriceStyle = { border: `2px solid ${contrastingColor}`, borderRadius: '8px', padding: '4px', fontSize: `${getFontSizeForSpan(pesosSpan)}px`};
               const dollarsStyle: CSSProperties = { fontSize: `${getFontSizeForSpan(dollarSpan)}px` };
-              const priceInDollars = getUSDPrice(card);
-              const priceInPesos= priceInDollars === OUT_OF_STOCK ? priceInDollars : (parseFloat(priceInDollars) * savedDollarValue).toFixed(2);
+              const priceInPesos= ((priceInDollars === OUT_OF_STOCK && card.lastPrice ? parseFloat(card.lastPrice) : parseFloat(priceInDollars)) * savedDollarValue).toLocaleString('es-AR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+                minimumIntegerDigits: 1,
+                useGrouping: true,
+              });
 
               return (
                 <Tilt options={tiltOptions} className="search-results-container__card" key={card.image}>
@@ -225,16 +230,15 @@ const SearchBox = () => {
                       id={dollarPriceId}
                       className='search-results-container__card-price-container-dollars'
                       style={dollarsStyle}>
-                       {priceInDollars === OUT_OF_STOCK ? priceInDollars : `US$${priceInDollars}`}
+                       {priceInDollars === OUT_OF_STOCK ? `${" US$"+card.lastPrice}` : `US$${priceInDollars}`}
                     </span>
-                    {priceInDollars !== OUT_OF_STOCK &&
+
                     <span
                       id={pesosPriceId}
                       className='search-results-container__card-price-container-pesos'
                       style={arsPriceStyle}>
                         AR${priceInPesos}
                     </span>
-                    }
                   </div>
                 </Tilt>
               )

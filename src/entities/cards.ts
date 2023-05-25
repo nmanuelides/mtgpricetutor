@@ -4,6 +4,7 @@ export interface Card {
     setName: string;
     scgPrice?: string;
     ckPrice?: string;
+    lastPrice?: string;
     borderColor?: string;
     foil: boolean;
     priceSource: 'SCG' | 'CK';

@@ -102,6 +102,9 @@ export async function getCardPrices(cardName: string) {
         foil: isFoil,
         priceSource: 'SCG'
     };
+    if (formattedPrice === '0') {
+      currentCard.lastPrice = priceNumber.toFixed(2);
+    }
     console.log("Source: "+currentCard.priceSource+"\n"+"Set name: "+ currentCard.setName+"\n"+"Price: "+currentCard.scgPrice+"\n"+"Foil: "+currentCard.foil+"\n"+"Collector Nº: "+currentCard.collectorNumber+"\n");
     return currentCard;
     });
