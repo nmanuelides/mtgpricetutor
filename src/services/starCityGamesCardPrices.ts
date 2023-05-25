@@ -1,14 +1,7 @@
 import { responseInterceptor } from "http-proxy-middleware";
 import { getPixelColor } from "../components/helpers/imageColors";
+import { Card } from '../entities/cards';
 
-export interface Card {
-    image: string;
-    collectorNumber: string;
-    uniqueId: string;
-    set: string;
-    price: string;
-    borderColor: string;
-}
 
 const defaultOptions = {
   method: 'POST',
@@ -54,6 +47,23 @@ export async function getAutoCompleteSuggestions(searchValue: string) {
   }
 }
 
+const getCollectorNumber = (card: any) => {
+  let collectorNumber = ""
+  if (card.Document.collector_number) {
+    collectorNumber = card.Document.collector_number[0];
+  } else if(card.Document.sku) {
+    const regex = /(\d+)-[^-]*$/;
+    const match = card.Document.sku[0].match(regex);
+
+    let result = "";
+    if (match && match[1]) {
+      result = parseInt(match[1], 10).toString();
+      }
+    collectorNumber = result;
+  }
+  return collectorNumber;
+}
+
 export async function getCardPrices(cardName: string) {
     const url ="https://essearchapi-na.hawksearch.com/api/v2/search";
 
@@ -71,10 +81,12 @@ export async function getCardPrices(cardName: string) {
     })}
     const response = await fetch(url, options);
     const data = await response.json();
-
+    console.log("--------------");
     const promises = data.Results.map(async (card: any) => {
     const priceNumber = Number(card.Document.price_retail?.[0]);
-    const formattedPrice = priceNumber.toFixed(2);
+    const stock = parseInt(card.Document.metric_inventory[0], 10)
+    const formattedPrice = stock > 0 ? priceNumber.toFixed(2) : '0' ;
+    const isFoil = card.Document.finish[0].toLowerCase() === 'foil';
 
     const borderColorHexValue = await getPixelColor(card.Document.image?.[0]).catch(error => {
     console.error(error);
@@ -83,16 +95,18 @@ export async function getCardPrices(cardName: string) {
 
     const currentCard: Card = {
         image: card.Document.image?.[0],
-        collectorNumber: card.Document.collector_number?.[0],
-        uniqueId: card.Document.unique_id?.[0],
-        set: card.Document.set?.[0],
-        price: formattedPrice,
-        borderColor: borderColorHexValue
+        collectorNumber: getCollectorNumber(card),
+        setName: card.Document.set?.[0].replace("(Foil)", "").trim(),
+        scgPrice: formattedPrice,
+        borderColor: borderColorHexValue,
+        foil: isFoil,
+        priceSource: 'SCG'
     };
-
+    console.log("Source: "+currentCard.priceSource+"\n"+"Set name: "+ currentCard.setName+"\n"+"Price: "+currentCard.scgPrice+"\n"+"Foil: "+currentCard.foil+"\n"+"Collector Nº: "+currentCard.collectorNumber+"\n");
     return currentCard;
     });
 
-    const cardPrices = await Promise.all(promises);
-    return cardPrices;
+    const scgCards = await Promise.all(promises);
+    console.log("TOTAL SCG CARDS: " + scgCards.length);
+    return scgCards;
 };
