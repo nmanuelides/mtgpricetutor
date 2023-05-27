@@ -20,7 +20,7 @@ const App = () => {
           <div data-text='MTG PRICE TUTOR' className='title'>
             MTG PRICE TUTOR
           </div>
-          <span className='subtitle'>Precios de SCG o CK en su defecto. Precio en rojo significa desactualizado por faltante de stock.</span>
+          <span className='subtitle'>Los precios corresponden a cartas en estado NM. Precios de SCG o CK en su defecto. Precio en rojo significa desactualizado por faltante de stock.</span>
           <span className='subtitle'>
             Valor en pesos calculados según dólar:
           </span>
