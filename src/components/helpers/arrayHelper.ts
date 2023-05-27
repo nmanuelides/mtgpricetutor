@@ -27,17 +27,15 @@ export function mergeCardsArrays(scgArray: Card[], ckArray: Card[]): Card[] {
         mergedCardsArray[matchingCardIndex].ckPrice = ckArrayCard.ckPrice;
         mergedCardsArray[matchingCardIndex].price = ckArrayCard.ckPrice;
         mergedCardsArray[matchingCardIndex].priceSource = ckArrayCard.priceSource;
-      } else {
-        for (const key in scgCardsMap) {
-            if (!isKeyMatchedWithCKArray(key, ckArray)) {
-              // Set lastPrice for the not matching card
-              const scgCard = scgCardsMap[key];
-              scgCard.lastPrice = scgCard.scgPrice;
-            }
-          }
-
-        }
+      }
     }
+    for (const key in scgCardsMap) {
+        if (!isKeyMatchedWithCKArray(key, ckArray)) {
+          // Set lastPrice for the not matching card
+          const scgCard = scgCardsMap[key];
+          scgCard.lastPrice = scgCard.scgPrice;
+        }
+      }
     return mergedCardsArray;
 }
 
