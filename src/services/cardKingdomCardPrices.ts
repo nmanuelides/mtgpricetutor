@@ -2,6 +2,9 @@
 import {load} from 'cheerio';
 import { Card } from '../entities/cards';
 
+const THIRD_EDITION = '3rd Edition';
+const THIRD_EDITION_FULL_NAME = '3rd Edition / Revised';
+
 async function streamToString(stream: ReadableStream<Uint8Array>): Promise<string> {
     const reader = stream.getReader();
     const chunks: Uint8Array[] = [];
@@ -51,7 +54,7 @@ async function streamToString(stream: ReadableStream<Uint8Array>): Promise<strin
 
         if (name && set && price) {
         const card: Card = {
-            setName: set.trim(),
+            setName: set.trim() === THIRD_EDITION ? THIRD_EDITION_FULL_NAME.toLowerCase() : set.toLowerCase().trim(),
             ckPrice: price.trim(),
             collectorNumber: collectorNumber,
             foil: finish,

@@ -8,4 +8,6 @@ export interface Card {
     borderColor?: string;
     foil: boolean;
     priceSource: 'SCG' | 'CK';
+    stock?: number;
+    price?: string;
 }

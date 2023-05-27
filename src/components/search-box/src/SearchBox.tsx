@@ -16,7 +16,7 @@ import buttonLoadingImg from '../../../assets/search-button-loading-active.png';
 import { DollarValueContext } from "../../../contexts/dollarValueContext";
 import { getCKCardPrices } from "../../../services/cardKingdomCardPrices";
 import { Card } from '../../../entities/cards';
-import { mergeArrays } from "../../helpers/arrayHelper";
+import { mergeCardsArrays } from "../../helpers/arrayHelper";
 
 const SearchBox = () => {
   const {trackSearchEvent} = useTracking();
@@ -78,7 +78,7 @@ const SearchBox = () => {
       //setCKCards(ckResults);
       const scgResults = await getCardPrices(cardName);
       //setSCGCards(results);
-      setCardsResult(mergeArrays(scgResults, ckResults));
+      setCardsResult(mergeCardsArrays(scgResults, ckResults));
     } catch (error) {
       console.error(error);
     } finally {
@@ -155,7 +155,7 @@ const SearchBox = () => {
 
   const getUSDPrice = (card: Card) => {
     let usdPrice = 'Out of stock'
-    if(card.scgPrice && parseFloat(card.scgPrice)>0) {
+    if(card.scgPrice && card.scgPrice !== '0') {
         usdPrice = card.scgPrice;
     } else if (card.ckPrice){
       usdPrice = card.ckPrice;
@@ -211,16 +211,16 @@ const SearchBox = () => {
               const pesosSpan = document.getElementById(pesosPriceId);
 
               const contrastingColor = getFontColorForBackground(card.borderColor);
-              const priceInDollars: string = getUSDPrice(card);
-              const priceStyle = { background: card.borderColor, color: priceInDollars === OUT_OF_STOCK ? '#FF0000': contrastingColor };
-              const arsPriceStyle = { border: `2px solid ${contrastingColor}`, borderRadius: '8px', padding: '4px', fontSize: `${getFontSizeForSpan(pesosSpan)}px`};
-              const dollarsStyle: CSSProperties = { fontSize: `${getFontSizeForSpan(dollarSpan)}px` };
-              const priceInPesos= ((priceInDollars === OUT_OF_STOCK && card.lastPrice ? parseFloat(card.lastPrice) : parseFloat(priceInDollars)) * savedDollarValue).toLocaleString('es-AR', {
+              const priceInDollars: string = card.lastPrice ? card.lastPrice : card.price!;
+              const priceInPesos= (parseFloat(priceInDollars) * savedDollarValue).toLocaleString('es-AR', {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
                 minimumIntegerDigits: 1,
                 useGrouping: true,
               });
+              const priceStyle = { background: card.borderColor, color: card.lastPrice ? '#FF0000': contrastingColor };
+              const arsPriceStyle = { border: `2px solid ${contrastingColor}`, borderRadius: '8px', padding: '4px', fontSize: `${getFontSizeForSpan(pesosSpan)}px`};
+              const dollarsStyle: CSSProperties = { fontSize: `${getFontSizeForSpan(dollarSpan)}px` };
 
               return (
                 <Tilt options={tiltOptions} className="search-results-container__card" key={card.image}>
@@ -230,7 +230,7 @@ const SearchBox = () => {
                       id={dollarPriceId}
                       className='search-results-container__card-price-container-dollars'
                       style={dollarsStyle}>
-                       {priceInDollars === OUT_OF_STOCK ? `${" US$"+card.lastPrice}` : `US$${priceInDollars}`}
+                       {card.lastPrice ? `${" US$"+card.lastPrice}` : `${card.priceSource} US$${priceInDollars}`}
                     </span>
 
                     <span

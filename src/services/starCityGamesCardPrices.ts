@@ -2,6 +2,7 @@ import { responseInterceptor } from "http-proxy-middleware";
 import { getPixelColor } from "../components/helpers/imageColors";
 import { Card } from '../entities/cards';
 
+const NEAR_MINT_CONDITION = 'Near Mint';
 
 const defaultOptions = {
   method: 'POST',
@@ -49,11 +50,12 @@ export async function getAutoCompleteSuggestions(searchValue: string) {
 
 const getCollectorNumber = (card: any) => {
   let collectorNumber = ""
-  if (card.Document.collector_number) {
-    collectorNumber = card.Document.collector_number[0];
-  } else if(card.Document.sku) {
+  if (card.collector_number) {
+    const preFormatedCollectorNumber = card.collector_number[0].match(/\d+$/);
+    collectorNumber = preFormatedCollectorNumber ? preFormatedCollectorNumber[0] : '';
+  } else if(card.sku) {
     const regex = /(\d+)-[^-]*$/;
-    const match = card.Document.sku[0].match(regex);
+    const match = card.sku[0].match(regex);
 
     let result = "";
     if (match && match[1]) {
@@ -62,6 +64,33 @@ const getCollectorNumber = (card: any) => {
     collectorNumber = result;
   }
   return collectorNumber;
+}
+
+const isValidCard = (cards: any[]) => {
+  return cards.some((card: any) => 'condition' in card && card.condition[0] === 'Near Mint');
+}
+
+const getNearMintCard = (cards: any[]) => {
+  return cards.find(card => card.condition[0] === 'Near Mint');
+}
+
+const getStock = (cards: any[]) => {
+  const cardInStock = cards.find(card => {
+    if('qty' in card) {
+      return card.qty[0] !== '0'
+      }
+    });
+  return cardInStock ? parseInt(cardInStock.qty[0]) : 0;
+}
+
+const getSetName = (set: string) => {
+  let setName = ''
+  if(set.toLowerCase().includes('promo')) {
+    setName = 'promo';
+  } else {
+    setName = set.replace("(Foil)", "").trim();
+  }
+  return setName.toLowerCase().trim();
 }
 
 export async function getCardPrices(cardName: string) {
@@ -78,38 +107,52 @@ export async function getCardPrices(cardName: string) {
       PageNo: 1,
       MaxPerPage: 96,
       clientguid: "cc3be22005ef47d3969c3de28f09571b"
-    })}
-    const response = await fetch(url, options);
-    const data = await response.json();
-    console.log("--------------");
-    const promises = data.Results.map(async (card: any) => {
-    const priceNumber = Number(card.Document.price_retail?.[0]);
-    const stock = parseInt(card.Document.metric_inventory[0], 10)
-    const formattedPrice = stock > 0 ? priceNumber.toFixed(2) : '0' ;
-    const isFoil = card.Document.finish[0].toLowerCase() === 'foil';
+    })};
+    const scgResponseCards: Card[] = []
+    try {
+      const response = await fetch(url, options);
+      const data = await response.json();
+      console.log("--------------");
 
-    const borderColorHexValue = await getPixelColor(card.Document.image?.[0]).catch(error => {
-    console.error(error);
-    return '';
-    });
+      for (const card of data.Results) {
+        const scgCards = card.Document.hawk_child_attributes;
+        if (isValidCard(scgCards)) {
+          const nearMintCard = getNearMintCard(scgCards);
+          const priceNumber = parseFloat(nearMintCard.price[0]);
+          const formattedPrice = priceNumber.toFixed(2);
+          const isFoil = card.Document.finish[0].toLowerCase() === "foil";
+          const stock = getStock(scgCards);
 
-    const currentCard: Card = {
-        image: card.Document.image?.[0],
-        collectorNumber: getCollectorNumber(card),
-        setName: card.Document.set?.[0].replace("(Foil)", "").trim(),
-        scgPrice: formattedPrice,
-        borderColor: borderColorHexValue,
-        foil: isFoil,
-        priceSource: 'SCG'
-    };
-    if (formattedPrice === '0') {
-      currentCard.lastPrice = priceNumber.toFixed(2);
+          const borderColorHexValue = await getPixelColor(card.Document.image?.[0]).catch((error) => {
+            console.error(error);
+            return "";
+          });
+
+          const currentCard: Card = {
+            image: card.Document.image?.[0],
+            collectorNumber: getCollectorNumber(card.Document),
+            setName: getSetName(card.Document.set?.[0]),
+            scgPrice: formattedPrice,
+            price: formattedPrice,
+            borderColor: borderColorHexValue,
+            foil: isFoil,
+            priceSource: "SCG",
+            stock: stock
+          };
+
+          if (formattedPrice === "0") {
+            currentCard.lastPrice = priceNumber.toFixed(2);
+          }
+
+          console.log( "Source: " + currentCard.priceSource +"\n"+"Set name: "+currentCard.setName+"\n"+"Price: "+currentCard.scgPrice+
+            "\n"+"Foil: "+currentCard.foil+"\n"+"Collector Nº: "+currentCard.collectorNumber+"\n");
+
+          scgResponseCards.push(currentCard);
+        }
+      }
+    } catch (error) {
+      console.error(error);
     }
-    console.log("Source: "+currentCard.priceSource+"\n"+"Set name: "+ currentCard.setName+"\n"+"Price: "+currentCard.scgPrice+"\n"+"Foil: "+currentCard.foil+"\n"+"Collector Nº: "+currentCard.collectorNumber+"\n");
-    return currentCard;
-    });
-
-    const scgCards = await Promise.all(promises);
-    console.log("TOTAL SCG CARDS: " + scgCards.length);
-    return scgCards;
+    console.log("TOTAL SCG CARDS: " + scgResponseCards.length);
+    return scgResponseCards;
 };
