@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.8bf5b94a.css",
-    "main.js": "/static/js/main.bef10258.js",
+    "main.js": "/static/js/main.ff00c38c.js",
     "static/js/787.77f49c56.chunk.js": "/static/js/787.77f49c56.chunk.js",
     "static/media/page-bg27.jpg": "/static/media/page-bg27.9602dbf5c54d97af33b7.jpg",
     "static/media/Beleren2016-Bold.ttf": "/static/media/Beleren2016-Bold.2ceb65923c91913395fa.ttf",
@@ -10,11 +10,11 @@
     "static/media/search-button-loading.png": "/static/media/search-button-loading.1321bc34960ec86b05f6.png",
     "index.html": "/index.html",
     "main.8bf5b94a.css.map": "/static/css/main.8bf5b94a.css.map",
-    "main.bef10258.js.map": "/static/js/main.bef10258.js.map",
+    "main.ff00c38c.js.map": "/static/js/main.ff00c38c.js.map",
     "787.77f49c56.chunk.js.map": "/static/js/787.77f49c56.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.8bf5b94a.css",
-    "static/js/main.bef10258.js"
+    "static/js/main.ff00c38c.js"
   ]
 }
