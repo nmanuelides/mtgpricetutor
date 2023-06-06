@@ -153,8 +153,10 @@ export async function getCardPrices(cardName: string, time: Date) {
     } catch (error) {
       console.error(error);
     }
+    /*
     console.log("TOTAL SCG CARDS: " + scgResponseCards.length);
     const endTime = new Date();
     console.log("SCG RESULTS took: " + (endTime.getTime() - time.getTime())/1000);
+    */
     return scgResponseCards;
 };

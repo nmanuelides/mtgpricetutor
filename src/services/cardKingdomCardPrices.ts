@@ -123,7 +123,9 @@ async function streamToString(stream: ReadableStream<Uint8Array>): Promise<strin
     } catch (error) {
         console.error(error);
     }
+    /*
     const endTime = new Date();
     console.log("CK RESULTS took: " + (endTime.getTime() - time.getTime())/1000);
+    */
     return cards;
   }

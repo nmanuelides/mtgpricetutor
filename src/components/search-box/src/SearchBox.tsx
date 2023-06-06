@@ -83,7 +83,7 @@ const SearchBox = () => {
       const [ckResults, scgResults] = await Promise.all([ckResultsPromise, scgResultsPromise]);
       const mergeStartTime = new Date();
       setCardsResult(mergeCardsArrays(scgResults, ckResults, mergeStartTime));
-      console.log("TOTAL TIME: " + (new Date().getTime() - ckStartTime.getTime())/1000);
+      //console.log("TOTAL TIME: " + (new Date().getTime() - ckStartTime.getTime())/1000);
     } catch (error) {
       console.error(error);
     } finally {

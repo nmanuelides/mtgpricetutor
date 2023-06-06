@@ -36,8 +36,10 @@ export function mergeCardsArrays(scgArray: Card[], ckArray: Card[], time: Date):
           scgCard.lastPrice = scgCard.scgPrice;
         }
       }
+    /*
     const endTime = new Date();
     console.log("MERGE took: " + (endTime.getTime() - time.getTime())/1000);
+    */
     return mergedCardsArray;
 }
 
