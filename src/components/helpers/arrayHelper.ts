@@ -1,7 +1,7 @@
 import { Card } from "../../entities/cards";
 
 
-export function mergeCardsArrays(scgArray: Card[], ckArray: Card[]): Card[] {
+export function mergeCardsArrays(scgArray: Card[], ckArray: Card[], time: Date): Card[] {
     const mergedCardsArray: Card[] = [...scgArray]; // Create a copy of scg array
     const scgCardsMap: { [key: string]: Card } = {};
 
@@ -36,6 +36,8 @@ export function mergeCardsArrays(scgArray: Card[], ckArray: Card[]): Card[] {
           scgCard.lastPrice = scgCard.scgPrice;
         }
       }
+    const endTime = new Date();
+    console.log("MERGE took: " + (endTime.getTime() - time.getTime())/1000);
     return mergedCardsArray;
 }
 

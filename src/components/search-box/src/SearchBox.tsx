@@ -74,11 +74,16 @@ const SearchBox = () => {
     setFinishedSearching(true);
     try {
       trackSearchEvent(cardName);
-      const ckResults = await getCKCardPrices(cardName);
+      const ckStartTime = new Date();
+      const ckResultsPromise = getCKCardPrices(cardName, ckStartTime);
       //setCKCards(ckResults);
-      const scgResults = await getCardPrices(cardName);
+      const scgStartTime = new Date();
+      const scgResultsPromise = getCardPrices(cardName, scgStartTime);
       //setSCGCards(results);
-      setCardsResult(mergeCardsArrays(scgResults, ckResults));
+      const [ckResults, scgResults] = await Promise.all([ckResultsPromise, scgResultsPromise]);
+      const mergeStartTime = new Date();
+      setCardsResult(mergeCardsArrays(scgResults, ckResults, mergeStartTime));
+      console.log("TOTAL TIME: " + (new Date().getTime() - ckStartTime.getTime())/1000);
     } catch (error) {
       console.error(error);
     } finally {
@@ -112,7 +117,7 @@ const SearchBox = () => {
     setIsLoading(true);
     try {
       trackSearchEvent(cardName);
-      const results = await getCardPrices(cardName);
+      const results = await getCardPrices(cardName, new Date());
       setSCGCards(results);
     } catch (error) {
       console.error(error);
@@ -224,7 +229,7 @@ const SearchBox = () => {
 
               return (
                 <Tilt options={tiltOptions} className="search-results-container__card" key={card.image}>
-                  <img src={card.image} alt="Card image" className={'search-results-container__card-image'} key={card.image}/>
+                  <img src={card.image} alt="Card image" className={'search-results-container__card-image'} key={card.image} loading="lazy"/>
                   <div className={'search-results-container__card-price-container'} style={priceStyle}>
                     <span
                       id={dollarPriceId}

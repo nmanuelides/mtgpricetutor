@@ -93,7 +93,7 @@ const getSetName = (set: string) => {
   return setName.toLowerCase().trim();
 }
 
-export async function getCardPrices(cardName: string) {
+export async function getCardPrices(cardName: string, time: Date) {
     const url ="https://essearchapi-na.hawksearch.com/api/v2/search";
 
     const options = {...defaultOptions, body: JSON.stringify({
@@ -112,7 +112,7 @@ export async function getCardPrices(cardName: string) {
     try {
       const response = await fetch(url, options);
       const data = await response.json();
-      console.log("--------------");
+      //console.log("--------------");
 
       for (const card of data.Results) {
         const scgCards = card.Document.hawk_child_attributes;
@@ -144,8 +144,8 @@ export async function getCardPrices(cardName: string) {
             currentCard.lastPrice = priceNumber.toFixed(2);
           }
 
-          console.log( "Source: " + currentCard.priceSource +"\n"+"Set name: "+currentCard.setName+"\n"+"Price: "+currentCard.scgPrice+
-            "\n"+"Foil: "+currentCard.foil+"\n"+"Collector Nº: "+currentCard.collectorNumber+"\n");
+          /*console.log( "Source: " + currentCard.priceSource +"\n"+"Set name: "+currentCard.setName+"\n"+"Price: "+currentCard.scgPrice+
+            "\n"+"Foil: "+currentCard.foil+"\n"+"Collector Nº: "+currentCard.collectorNumber+"\n");*/
 
           scgResponseCards.push(currentCard);
         }
@@ -154,5 +154,7 @@ export async function getCardPrices(cardName: string) {
       console.error(error);
     }
     console.log("TOTAL SCG CARDS: " + scgResponseCards.length);
+    const endTime = new Date();
+    console.log("SCG RESULTS took: " + (endTime.getTime() - time.getTime())/1000);
     return scgResponseCards;
 };

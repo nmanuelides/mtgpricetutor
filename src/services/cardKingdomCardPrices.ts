@@ -61,7 +61,7 @@ async function streamToString(stream: ReadableStream<Uint8Array>): Promise<strin
             priceSource: 'CK'
         };
 
-        console.log("Source: "+card.priceSource+"\n"+"Set name: "+ card.setName+"\n"+"Price: "+card.ckPrice+"\n"+"Foil: "+card.foil+"\n"+"Collector Nº: "+card.collectorNumber+"\n");
+        //console.log("Source: "+card.priceSource+"\n"+"Set name: "+ card.setName+"\n"+"Price: "+card.ckPrice+"\n"+"Foil: "+card.foil+"\n"+"Collector Nº: "+card.collectorNumber+"\n");
         return card;
     }
   }
@@ -76,7 +76,7 @@ async function streamToString(stream: ReadableStream<Uint8Array>): Promise<strin
     const cardSelector = "div.itemContentWrapper"
     const nonFoilCardDivElements = $nonFoil(cardSelector);
     //const foilCardLiElements = $foil('li.itemAddToCart.NM.active');
-    console.log("--------------");
+    //console.log("--------------");
     // Iterate over the card divs and extract the desired information
     const cards: Card[] = [];
     nonFoilCardDivElements.each((index, element) => {
@@ -102,7 +102,7 @@ async function streamToString(stream: ReadableStream<Uint8Array>): Promise<strin
     return `https://komet.cattaneo.uy/?headers=cors&skip=Host&Cookie=limit=${limit}&url=${url}`;
     };
 
-  export async function getCKCardPrices(cardName: string) {
+  export async function getCKCardPrices(cardName: string, time: Date) {
     const nonFoilurl = `https://www.cardkingdom.com/catalog/search?search=mtg_advanced&filter%5Bsort%5D=name&filter%5Bsearch%5D=mtg_advanced&filter%5Btab%5D=mtg_card&filter%5Bname%5D=${encodeURIComponent(cardName)}&filter%5Bshow_in_stock%5D=1&filter%5Btype_mode%5D=any&filter%5Bmanaprod_select%5D=any`;
     /* const foilurl = `https://www.cardkingdom.com/catalog/search?search=mtg_advanced&filter%5Bsort%5D=name&filter%5Bsearch%5D=mtg_advanced&filter%5Btab%5D=mtg_foil&filter%5Bname%5D=${encodeURIComponent(cardName)}&filter%5Bshow_in_stock%5D=1`;
     const nonFoilProxyUrl = `https://api.allorigins.win/raw?url=https://www.cardkingdom.com/catalog/search?search=mtg_advanced&filter%5Bsort%5D=name&filter%5Bsearch%5D=mtg_advanced&filter%5Btab%5D=mtg_card&filter%5Bname%5D=Llanowar%20Elves&filter%5Bedition%5D=&filter%5Bformat%5D=&filter%5Bshow_in_stock%5D=1&filter%5Btype_mode%5D=any&filter%5Bcard_type%5D%5B10%5D=&filter%5Bpow1%5D=&filter%5Bpow2%5D=&filter%5Btuf1%5D=&filter%5Btuf2%5D=&filter%5Bconcast1%5D=&filter%5Bconcast2%5D=&filter%5Bprice_op%5D=&filter%5Bprice%5D=&filter%5Boracle_text%5D=&filter%5Bmanaprod_select%5D=any&page=2`;
@@ -111,7 +111,7 @@ async function streamToString(stream: ReadableStream<Uint8Array>): Promise<strin
     //const foilsUrl= `https://www.cardkingdom.com/catalog/search?filter%5Bname%5D=${encodeURIComponent(cardName)}&filter%5Btab%5D=mtg_foil`
     let cards: Card[] = [];
     try{
-        console.log('CALLING: '+ toKometCkUrl(url))
+        //console.log('CALLING: '+ toKometCkUrl(url))
         const nonFoilRawResponse = await fetch(toKometCkUrl(url));
         const nonFoilHtmlStream = nonFoilRawResponse.body as ReadableStream<Uint8Array>;
         const nonFoilHtmlText = await streamToString(nonFoilHtmlStream);
@@ -123,5 +123,7 @@ async function streamToString(stream: ReadableStream<Uint8Array>): Promise<strin
     } catch (error) {
         console.error(error);
     }
+    const endTime = new Date();
+    console.log("CK RESULTS took: " + (endTime.getTime() - time.getTime())/1000);
     return cards;
   }
