@@ -1,0 +1,117 @@
+:root {
+  --fs-400: 1.4rem;
+  --fs-600: 1.6rem;
+}
+
+@media (max-width: 1000px) {
+  :root {
+    --fs-400: 1.8rem;
+    --fs-600: 2rem;
+  }
+}
+
+@media (max-width: 800px) {
+  :root {
+    --fs-400: 1rem;
+    --fs-600: 1.2rem;
+  }
+}
+
+.dollar-value-input {
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 16px;
+    height: 48px;
+    width: 180px;
+    box-shadow: 0 0px 20px rgba(0, 0, 0, 0.6);
+    border-radius: 12px;
+
+    .input-container {
+      display: flex;
+      align-items: center;
+      background: transparent;
+      border: none;
+      border-radius: 12px 0 0 12px;
+      overflow: hidden;
+      width: 70%;
+      max-height: 100%;
+      z-index: 100;
+
+      .prefix {
+        color: white;
+        font-size: 2rem;
+        padding: 12px 8px 8px 10px;
+        background: transparent;
+        width: 20%;
+      }
+
+      .input {
+        border: none;
+        outline: none;
+        height: 100%;
+        max-width: 80%;
+        padding: 4px;
+        font-size: var(--fs-400);
+        font-weight: 600;
+        font-family: "GilroyLight", sans-serif;
+        box-sizing: border-box;
+        overflow: hidden;
+        background: transparent;
+        color: white;
+      }
+      .input[type="number"] {
+        /* Remove default arrow styles */
+        -moz-appearance: textfield; /* Firefox */
+        appearance: textfield; /* Other browsers */
+      }
+
+      /* Remove spinner arrows on WebKit browsers */
+      .input[type="number"]::-webkit-inner-spin-button,
+      .input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        appearance: none;
+      }
+    }
+  }
+
+  &__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 0 12px 12px 0;
+    background: transparent;
+    color: white;
+    height: 100%;
+    width: 30%;
+    font-size: var(--fs-400);
+    font-family: "MTGFont", sans-serif;
+    transition: background 0.2s;
+    transition: font-size 0.1s ease-in-out;
+    cursor: pointer;
+  }
+
+  &__button:hover {
+    background: linear-gradient(120deg, rgba(white, 0.4) 10%, transparent 70%);
+    border: 1px solid rgb(188, 196, 199);
+  }
+
+  &__button-image {
+    max-height: 70%;
+    width: auto;
+    filter: invert(100%);
+    transition: max-height 0.15s ease-in-out;
+  }
+
+  &__button-image:hover {
+    max-height: 85%;
+    width: auto;
+    filter: invert(7%) sepia(2%) saturate(4423%) hue-rotate(164deg) brightness(97%) contrast(87%);
+  }
+}
+
+.input-container:focus-within {
+  border-color: red;
+}

@@ -1,15 +1,22 @@
 {
   "files": {
-    "main.css": "/static/css/main.bfad577e.css",
-    "main.js": "/static/js/main.8cd820cb.js",
+    "main.css": "/static/css/main.0c460092.css",
+    "main.js": "/static/js/main.44dac9a7.js",
     "static/js/787.77f49c56.chunk.js": "/static/js/787.77f49c56.chunk.js",
+    "static/media/page-bg13.jpg": "/static/media/page-bg13.3cc199aa5f119d7fd84e.jpg",
+    "static/media/Beleren2016-Bold.ttf": "/static/media/Beleren2016-Bold.2ceb65923c91913395fa.ttf",
+    "static/media/search-button-loading-active.png": "/static/media/search-button-loading-active.1f691a0ced1b416bfbcf.png",
+    "static/media/search-button-loading.png": "/static/media/search-button-loading.1321bc34960ec86b05f6.png",
+    "static/media/Gilroy-ExtraBold.otf": "/static/media/Gilroy-ExtraBold.0094146a0505298ed06a.otf",
+    "static/media/Gilroy-Light.otf": "/static/media/Gilroy-Light.cc7ab55d27205bd64001.otf",
+    "static/media/MTGPT-Logo.png": "/static/media/MTGPT-Logo.5e6ee04fbb2a91877a9a.png",
     "index.html": "/index.html",
-    "main.bfad577e.css.map": "/static/css/main.bfad577e.css.map",
-    "main.8cd820cb.js.map": "/static/js/main.8cd820cb.js.map",
+    "main.0c460092.css.map": "/static/css/main.0c460092.css.map",
+    "main.44dac9a7.js.map": "/static/js/main.44dac9a7.js.map",
     "787.77f49c56.chunk.js.map": "/static/js/787.77f49c56.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.bfad577e.css",
-    "static/js/main.8cd820cb.js"
+    "static/css/main.0c460092.css",
+    "static/js/main.44dac9a7.js"
   ]
 }

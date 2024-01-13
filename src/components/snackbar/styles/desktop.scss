@@ -1,0 +1,39 @@
+$bg-color-error: rgb(168, 22, 39);
+$bg-color-success: rgb(0, 107, 97);
+$font-color: #fff;
+$padding: 16px;
+$border-radius: 12px;
+
+.snackbar {
+    position: fixed;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: $font-color;
+    padding: $padding;
+    border-radius: $border-radius;
+    font-weight: 400;
+    font-size: 1.15rem;
+    transition: bottom 0.5s ease-in-out;
+    box-shadow: 0px 0px 30px black;
+    font-family: 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    text-align: center;
+    z-index: 10000000;
+}
+
+.snackbar-error {
+    background-color: $bg-color-error;
+}
+
+.snackbar-success {
+    background-color: $bg-color-success;
+}
+
+@keyframes showFromBottom {
+    0% {
+        bottom: -30%;
+    }
+
+}
