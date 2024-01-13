@@ -1,4 +1,4 @@
-import React, { CSSProperties, useState, useContext } from "react";
+import React, { CSSProperties, useContext } from "react";
 import {Card} from "../../../services/starCityGamesCardPrices";
 import { getFontColorForBackground } from "../../helpers/imageColors";
 import { getFontSizeForSpan } from "../../helpers/fontHelper";
@@ -34,7 +34,7 @@ const SearchResults = ({selectedCards, isSearching}: searchResultsProps): JSX.El
                 console.log('PRICE IN PESOS: '+priceInPesos);
                 return (
                   <Tilt options={tiltOptions} className="search-results-container__card" key={card.image}>
-                    <img src={card.image} alt="Card image" className={'search-results-container__card-image'} key={card.image}/>
+                    <img src={card.image} alt="Card" className={'search-results-container__card-image'} key={card.image}/>
                     <div className={'search-results-container__card-price-container'} style={priceStyle}>
                       <span
                         id={dollarPriceId}
@@ -51,7 +51,7 @@ const SearchResults = ({selectedCards, isSearching}: searchResultsProps): JSX.El
                     </div>
                   </Tilt>
                 )
-              }
+              } else null;
             })}
           </div>
           </div>
