@@ -24,7 +24,6 @@ const SearchBox = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [autoCompleteSuggestionsResults, setAutoCompleteSuggestionsResults] = useState<string[]>([]);
   const [scgCards, setSCGCards] = useState<Card[]>([]);
-  const [ckCards, setCKCards] = useState<Card[]>([]);
   const [cardsResult, setCardsResult] = useState<Card[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showSnackbar, setShowSnackbar] = useState(false);
@@ -32,7 +31,6 @@ const SearchBox = () => {
   const [snackbarType] = useState<SnackbarProps['type']>('error');
   const [finishedSearching, setFinishedSearching] = useState(true)
   const {savedDollarValue} = useContext(DollarValueContext);
-  const OUT_OF_STOCK = 'Out of stock';
 
   const debouncedSearchHandler = useRef(
     debounce(async (searchTerm: string) => {
@@ -158,16 +156,6 @@ const SearchBox = () => {
     return fontSize;
   }
 
-  const getUSDPrice = (card: Card) => {
-    let usdPrice = 'Out of stock'
-    if(card.scgPrice && card.scgPrice !== '0') {
-        usdPrice = card.scgPrice;
-    } else if (card.ckPrice){
-      usdPrice = card.ckPrice;
-    }
-    return usdPrice
-  }
-
   return (
     <ShowSnackbarContext.Provider value={{showSnackbar, setShowSnackbar}}>
     <form className={scgCards.length > 0 ? 'search-box__with-results' : 'search-box'} onSubmit={onSubmit}>
@@ -229,7 +217,7 @@ const SearchBox = () => {
 
               return (
                 <Tilt options={tiltOptions} className="search-results-container__card" key={card.image}>
-                  <img src={card.image} alt="Card image" className={'search-results-container__card-image'} key={card.image} loading="lazy"/>
+                  <img src={card.image} alt="Card" className={'search-results-container__card-image'} key={card.image} loading="lazy"/>
                   <div className={'search-results-container__card-price-container'} style={priceStyle}>
                     <span
                       id={dollarPriceId}
@@ -247,7 +235,7 @@ const SearchBox = () => {
                   </div>
                 </Tilt>
               )
-            }
+            } else return null;
           })}
         </div>
         </div>

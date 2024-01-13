@@ -1,8 +1,5 @@
-import { responseInterceptor } from "http-proxy-middleware";
 import { getPixelColor } from "../components/helpers/imageColors";
 import { Card } from '../entities/cards';
-
-const NEAR_MINT_CONDITION = 'Near Mint';
 
 const defaultOptions = {
   method: 'POST',
@@ -78,7 +75,7 @@ const getStock = (cards: any[]) => {
   const cardInStock = cards.find(card => {
     if('qty' in card) {
       return card.qty[0] !== '0'
-      }
+      } else return '0'
     });
   return cardInStock ? parseInt(cardInStock.qty[0]) : 0;
 }
