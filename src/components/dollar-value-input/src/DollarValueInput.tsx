@@ -19,13 +19,14 @@ const DollarValueInput = () => {
     useState<SnackbarProps["type"]>("error");
   const [userInput, setUserInput] = useState(DOLAR_PIRULO.toString());
   const baseClassName = "dollar-value-input";
+  
   useEffect(() => {
     const userSavedDollarValue = Cookies.get(SAVED_DOLLAR_VALUE_KEY);
     if (userSavedDollarValue) {
       setUserInput(userSavedDollarValue);
       setSavedDollarValue(parseFloat(userSavedDollarValue));
     }
-  }, []);
+  }, [setSavedDollarValue]);
 
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value;

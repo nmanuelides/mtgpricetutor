@@ -1,4 +1,3 @@
-import { responseInterceptor } from "http-proxy-middleware";
 import { getPixelColor } from "../components/helpers/imageColors";
 
 export interface Card {

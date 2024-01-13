@@ -6,8 +6,6 @@ import SearchBox from './components/search-box/src/SearchBox';
 import { DOLAR_PIRULO } from './dolar-pirulo';
 import DollarValueInput from './components/dollar-value-input/src/DollarValueInput';
 import { DollarValueContext } from './contexts/dollarValueContext';
-import mtgLogo1 from './assets/MTG-Logo1.png';
-import mtgLogo2 from './assets/MTG-Logo2.png';
 import mtgLogo3 from './assets/MTGPT-Logo.png';
 
 
