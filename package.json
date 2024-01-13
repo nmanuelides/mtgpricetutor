@@ -1,7 +1,7 @@
 {
   "name": "mtg-tutor",
   "version": "0.1.0",
-  "homepage": "https://nmanuelides.github.io/mtgpricetutor/",
+  "homepage": "https://nmanuelides.github.io/",
   "private": true,
   "type": "module",
   "dependencies": {
@@ -11,11 +11,15 @@
     "@types/jest": "^27.5.2",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.1",
+    "classnames": "^2.5.1",
     "http-proxy-middleware": "^2.0.6",
+    "js-cookie": "^3.0.5",
     "puppeteer": "^20.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-ga": "^3.3.1",
     "react-scripts": "5.0.1",
+    "sass": "^1.69.5",
     "vanilla-tilt": "^1.8.0",
     "web-vitals": "^2.1.4"
   },
@@ -23,7 +27,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "npm run build && cp -r build/* . && git add . && git commit -a -m 'Deploy to gh pages' && git push origin gh-pages"
   },
   "eslintConfig": {
     "extends": [
@@ -44,9 +49,9 @@
     ]
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.3",
     "@types/lodash": "^4.14.194",
     "@types/node": "^16.18.26",
-    "node-sass": "^8.0.0",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.5"
   }

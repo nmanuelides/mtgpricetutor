@@ -1,34 +1,87 @@
 @media (max-width: 768px) {
 
-.search-results-container__list {
-    width: 86svw;
+.search-box {
+    width: 100svw;
+    margin-top: 20px;
+
+    &__with-results {
+        width: 100%;
+        margin-top: 20px;
+    }
+    &__input-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap:8px;
+    }
+
+    &__input-container::before {
+        display: none;
+    }
+
+    &__input-text-container {
+        width: 85%;
+    }
+
+    &__input-text {
+        border-radius: 12px;
+        font-size: large;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    &__input-text-disabled {
+        border-radius: 12px;
+    }
+    &__button {
+        display: none;
+    }
+    &__button-loading {
+        display: none;
+    }
+}
+
+.search-suggestions-container {
+    &__list-visible {
+        width: 80svw;
+    }
+    &__result-item {
+        padding: 12px;
+    }
 }
 
 .search-results-container {
+
     &__card {
         border-radius: 13px
     }
     &__card-image {
         border-radius: 13px;
     }
-    &__card-results{
-    &-blurred {
+    &__card-results {
+        width: 100%;
+        &-blurred {
         position: absolute;
-        top: 16%;
-        left: 12.5%;
-        right: 9%;
+        top: 22%;
+        width: 100%;
         filter: blur(5px);
-      }
-    &-list {
-    display: grid;
-        grid-template-columns: repeat(2, 182px);
-        grid-auto-rows: auto;
-        grid-gap: 32px;
-        margin-top: 32px;
+        z-index: -1;
+        }
+
+        &-list {
+            display: grid;
+            grid-template-columns: repeat(2, 45%);
+            grid-auto-rows: auto;
+            grid-gap: 16px;
+            margin-top: 32px;
+            justify-content: center;
+            }
+        }
+        &__card-price-container {
+            &-pesos {
+                font-size: 14px;
+            }
+        }
     }
-}
-}
-.search-box__input-container {
-    width: 90svw;
-}
 }
