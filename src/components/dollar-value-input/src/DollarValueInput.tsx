@@ -21,7 +21,7 @@ const [userInput, setUserInput] = useState(DOLAR_PIRULO.toString());
             setUserInput(userSavedDollarValue)
             setSavedDollarValue(parseFloat(userSavedDollarValue));
         }
-    }, []);
+    }, [setSavedDollarValue]);
 
     const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         const input = e.target.value;
