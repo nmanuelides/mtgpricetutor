@@ -51,7 +51,7 @@ const SearchResults = ({selectedCards, isSearching}: searchResultsProps): JSX.El
                     </div>
                   </Tilt>
                 )
-              } else null;
+              } else return null;
             })}
           </div>
           </div>
