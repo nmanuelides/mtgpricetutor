@@ -1,9 +1,6 @@
-import React, { CSSProperties, useEffect, useRef, useState, useContext } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { debounce } from "lodash";
-import { getCardPrices, getAutoCompleteSuggestions } from "../../../services/starCityGamesCardPrices";
-import Tilt from '../../../hoc/Tilt';
-import { tiltOptions } from "../../../hoc/tiltOptions";
-import { getFontColorForBackground } from "../../helpers/imageColors";
+import { getCardPrices, getAutoCompleteSuggestions, Card } from "../../../services/starCityGamesCardPrices";
 import '../styles/desktop.scss';
 import '../styles/mobile.scss';
 import LoadingIndicator from "../../loading-indicator/src/LoadingIndicator";
@@ -11,32 +8,26 @@ import Snackbar, { SnackbarProps } from "../../snackbar/src/Snackbar";
 import { ShowSnackbarContext } from "../../../contexts/showSnackbarContext";
 import ReactGA from 'react-ga';
 import {useTracking} from '../../../hooks/useTracking';
-import buttonImg from '../../../assets/search-button.png';
-import buttonLoadingImg from '../../../assets/search-button-loading-active.png';
-import { DollarValueContext } from "../../../contexts/dollarValueContext";
-import { getCKCardPrices } from "../../../services/cardKingdomCardPrices";
-import { Card } from '../../../entities/cards';
-import { mergeCardsArrays } from "../../helpers/arrayHelper";
+import SearchResults from "../../search-results";
+
 
 const SearchBox = () => {
   const {trackSearchEvent} = useTracking();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const [autoCompleteSuggestionsResults, setAutoCompleteSuggestionsResults] = useState<string[]>([]);
-  const [scgCards, setSCGCards] = useState<Card[]>([]);
-  const [cardsResult, setCardsResult] = useState<Card[]>([]);
+  const [searchResults, setSearchResults] = useState<string[]>([]);
+  const [selectedCards, setSelectedCards] = useState<Card[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarType] = useState<SnackbarProps['type']>('error');
   const [finishedSearching, setFinishedSearching] = useState(true)
-  const {savedDollarValue} = useContext(DollarValueContext);
 
   const debouncedSearchHandler = useRef(
     debounce(async (searchTerm: string) => {
       try {
         const data = await getAutoCompleteSuggestions(searchTerm);
-        setAutoCompleteSuggestionsResults(data || []);
+        setSearchResults(data || []);
       } catch (error) {
         console.error(error);
       }
@@ -57,7 +48,7 @@ const SearchBox = () => {
     const searchTerm = e.target.value;
     if (!searchTerm) {
       setSearchTerm('');
-      setSCGCards([])
+      setSelectedCards([])
       return;
     }
     setFinishedSearching(false);
@@ -66,22 +57,14 @@ const SearchBox = () => {
   }
 
   const onCardSelected = async (selectedCardIndex: number) => {
-    const cardName = autoCompleteSuggestionsResults[selectedCardIndex];
-    setAutoCompleteSuggestionsResults([]);
+    const cardName = searchResults[selectedCardIndex];
+    setSearchResults([]);
     setIsLoading(true)
     setFinishedSearching(true);
     try {
       trackSearchEvent(cardName);
-      const ckStartTime = new Date();
-      const ckResultsPromise = getCKCardPrices(cardName, ckStartTime);
-      //setCKCards(ckResults);
-      const scgStartTime = new Date();
-      const scgResultsPromise = getCardPrices(cardName, scgStartTime);
-      //setSCGCards(results);
-      const [ckResults, scgResults] = await Promise.all([ckResultsPromise, scgResultsPromise]);
-      const mergeStartTime = new Date();
-      setCardsResult(mergeCardsArrays(scgResults, ckResults, mergeStartTime));
-      //console.log("TOTAL TIME: " + (new Date().getTime() - ckStartTime.getTime())/1000);
+      const results = await getCardPrices(cardName);
+      setSelectedCards(results);
     } catch (error) {
       console.error(error);
     } finally {
@@ -99,7 +82,7 @@ const SearchBox = () => {
     }
     let cardName = '';
 
-    inputValue && autoCompleteSuggestionsResults.forEach((cardSuggestion: string) => {
+    inputValue && searchResults.forEach((cardSuggestion: string) => {
       if (cardSuggestion.toLowerCase() === inputValue.toLowerCase().trim()) {
         cardName = cardSuggestion;
       }
@@ -115,8 +98,8 @@ const SearchBox = () => {
     setIsLoading(true);
     try {
       trackSearchEvent(cardName);
-      const results = await getCardPrices(cardName, new Date());
-      setSCGCards(results);
+      const results = await getCardPrices(cardName);
+      setSelectedCards(results);
     } catch (error) {
       console.error(error);
     } finally {
@@ -124,41 +107,9 @@ const SearchBox = () => {
     }
   };
 
-  const getPriceSize = (span: HTMLElement | null) => {
-    let priceWidth = 62;
-    if (span) {
-      priceWidth = span?.offsetWidth;
-    }
-    return priceWidth;
-  }
-
-  const getFontSizeForSpan = (span: HTMLElement | null) => {
-    const elementWidth = getPriceSize(span);
-    const minWidth = 44;
-    const maxWidth = 80;
-    const minFontSize = 10;
-    const maxFontSize = 16;
-    let fontSize;
-    const isDesktop = window.innerWidth >= 768
-    if(isDesktop) {
-      return fontSize = 18;
-    }
-    if (elementWidth >= maxWidth) {
-      fontSize = minFontSize;
-    } else if (elementWidth <= minWidth) {
-      fontSize = maxFontSize;
-    } else {
-      const widthRange = maxWidth - minWidth;
-      const widthDifference = maxWidth - elementWidth;
-      const fontSizeDifference = maxFontSize - minFontSize;
-      fontSize = minFontSize + (fontSizeDifference * widthDifference) / widthRange;
-    }
-    return fontSize;
-  }
-
   return (
     <ShowSnackbarContext.Provider value={{showSnackbar, setShowSnackbar}}>
-    <form className={scgCards.length > 0 ? 'search-box__with-results' : 'search-box'} onSubmit={onSubmit}>
+    <form className={selectedCards.length > 0 ? 'search-box__with-results' : 'search-box'} onSubmit={onSubmit}>
       <div className={'search-box__input-container'}>
         <div className='search-box__input-text-container'>
         <input
@@ -174,13 +125,13 @@ const SearchBox = () => {
         />
         <LoadingIndicator isLoading={isLoading}/>
         </div>
-        <button className={'search-box__button'} type='submit'disabled={isLoading}>
-          <img className={'search-box__button-image'} src={isLoading ? buttonLoadingImg : buttonImg} alt='search button'/>
+        <button className={isLoading ? 'search-box__button-disabled' : 'search-box__button'} type='submit'disabled={isLoading}>
+          BUSCAR
         </button>
       </div>
-      {autoCompleteSuggestionsResults.length > 0 &&
+      {searchResults.length > 0 &&
         <ul className={!finishedSearching ? 'search-suggestions-container__list-visible' : 'search-suggestions-container__list-invisible'}>
-          {autoCompleteSuggestionsResults.map((cardSuggestion, index) => {
+          {searchResults.map((cardSuggestion, index) => {
             return  <li
                       className={'search-suggestions-container__result-item'}
                       key={cardSuggestion}
@@ -191,56 +142,8 @@ const SearchBox = () => {
           })}
         </ul>
       }
-    <div className={'search-results-container'}>
-      {cardsResult.length > 0 && (
-        <div className={finishedSearching ? 'search-results-container__card-results': 'search-results-container__card-results-blurred'}>
-        <div className={'search-results-container__card-results-list'}>
-          {cardsResult.map((card: Card, index) => {
-            if (card.borderColor && card.borderColor.length > 0) {
-              const dollarPriceId = `dollarPrice${index}`;
-              const pesosPriceId = `pesosPrice${index}`;
-
-              const dollarSpan = document.getElementById(dollarPriceId);
-              const pesosSpan = document.getElementById(pesosPriceId);
-
-              const contrastingColor = getFontColorForBackground(card.borderColor);
-              const priceInDollars: string = card.lastPrice ? card.lastPrice : card.price!;
-              const priceInPesos= (parseFloat(priceInDollars) * savedDollarValue).toLocaleString('es-AR', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-                minimumIntegerDigits: 1,
-                useGrouping: true,
-              });
-              const priceStyle = { background: card.borderColor, color: card.lastPrice ? '#FF0000': contrastingColor };
-              const arsPriceStyle = { border: `2px solid ${contrastingColor}`, borderRadius: '8px', padding: '4px', fontSize: `${getFontSizeForSpan(pesosSpan)}px`};
-              const dollarsStyle: CSSProperties = { fontSize: `${getFontSizeForSpan(dollarSpan)}px` };
-
-              return (
-                <Tilt options={tiltOptions} className="search-results-container__card" key={card.image}>
-                  <img src={card.image} alt="Card" className={'search-results-container__card-image'} key={card.image} loading="lazy"/>
-                  <div className={'search-results-container__card-price-container'} style={priceStyle}>
-                    <span
-                      id={dollarPriceId}
-                      className='search-results-container__card-price-container-dollars'
-                      style={dollarsStyle}>
-                       {card.lastPrice ? `${" US$"+card.lastPrice}` : `${card.priceSource} US$${priceInDollars}`}
-                    </span>
-
-                    <span
-                      id={pesosPriceId}
-                      className='search-results-container__card-price-container-pesos'
-                      style={arsPriceStyle}>
-                        AR${priceInPesos}
-                    </span>
-                  </div>
-                </Tilt>
-              )
-            } else return null;
-          })}
-        </div>
-        </div>
-      )}
-      </div>
+      <SearchResults selectedCards={selectedCards} isSearching={finishedSearching}/>
+    
     </form>
     <Snackbar message={snackbarMessage} type={snackbarType}/>
     </ShowSnackbarContext.Provider>

@@ -1,8 +1,18 @@
-$page-background: url('./assets/page-bg27.jpg');
+$page-background: url('./assets/page-bg13.jpg');
 
 @font-face {
   font-family: 'MTGFont';
   src: url('./assets/Beleren2016-Bold.ttf') format('truetype'),
+}
+
+@font-face {
+  font-family: 'GilroyLight';
+  src: url('./assets/Gilroy-Light.otf') format('truetype');
+}
+
+@font-face {
+  font-family: 'GilroyExtraBold';
+  src: url('./assets/Gilroy-ExtraBold.otf') format('truetype');
 }
 
 body {
@@ -30,13 +40,14 @@ code {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   background-image: $page-background;
-  background-position: center 10%;
+  background-position: center 30%;
   background-size: cover;
   z-index: -100000;
 }
+
 .mtg-tutor__background::before {
   content: '';
   position:absolute;
@@ -44,7 +55,17 @@ code {
   left: 0;
   width: 100%;
   height: 100%;
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(10px);
+}
+
+.mtg-tutor__background::after {
+  content: '';
+  position:absolute;
+  background-color: rgba($color: #000000, $alpha: 0.2);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .mtg-tutor__main-container {
@@ -55,19 +76,20 @@ code {
   align-items: center;
   margin-top: 32px;
   .title{
-    font-size:xx-large;
+    display: flex;
+    font-size:3.2rem;
     position: relative;
     font-weight: 1000;
-    font-size: 5em;
     font-family: 'MTGFont', sans-serif;
     z-index: 1;
     position: relative;
-    background: white;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    mix-blend-mode: overlay;
+    color: white;
+    //background: white;
+    //background-clip: text;
+    //-webkit-text-fill-color: transparent;
+    //mix-blend-mode: overlay;
   }
-  .title::after {
+  /*.title::after {
     content: 'MTG PRICE TUTOR';
     position: absolute;
     top: 0%;
@@ -77,9 +99,9 @@ code {
     z-index: 2;
     mix-blend-mode: normal;
     text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-  }
+  }*/
 
-  .title::before {
+  /*.title::before {
     content: 'MTG PRICE TUTOR';
     position: absolute;
     top: 0%;
@@ -89,13 +111,23 @@ code {
     z-index: 2;
     mix-blend-mode: normal;
     text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  }*/
+
+  .title-image { 
+    width: auto;
+    max-height: 115px;
+    margin-left: 300px;
   }
 
   .subtitle {
+    margin: 16px;
+    text-align: center;
     position: relative;
     color: white;
-    font-size: large;
-    z-index: 1;
+    font-size: 1.4rem;
+    font-family: 'GilroyLight', sans-serif;
+    font-weight: 500;
+    line-height: 28px;
   }
 }
 
@@ -120,7 +152,7 @@ code {
     .subtitle {
       margin: 0 12px;
       text-align: center;
-      font-size: small;
+      font-size: large;
     }
   }
 }

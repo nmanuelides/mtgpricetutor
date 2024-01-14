@@ -1,5 +1,13 @@
 import { getPixelColor } from "../components/helpers/imageColors";
-import { Card } from '../entities/cards';
+
+export interface Card {
+    image: string;
+    collectorNumber: string;
+    uniqueId: string;
+    set: string;
+    price: string;
+    borderColor: string;
+}
 
 const defaultOptions = {
   method: 'POST',
@@ -45,52 +53,7 @@ export async function getAutoCompleteSuggestions(searchValue: string) {
   }
 }
 
-const getCollectorNumber = (card: any) => {
-  let collectorNumber = ""
-  if (card.collector_number) {
-    const preFormatedCollectorNumber = card.collector_number[0].match(/\d+$/);
-    collectorNumber = preFormatedCollectorNumber ? preFormatedCollectorNumber[0] : '';
-  } else if(card.sku) {
-    const regex = /(\d+)-[^-]*$/;
-    const match = card.sku[0].match(regex);
-
-    let result = "";
-    if (match && match[1]) {
-      result = parseInt(match[1], 10).toString();
-      }
-    collectorNumber = result;
-  }
-  return collectorNumber;
-}
-
-const isValidCard = (cards: any[]) => {
-  return cards.some((card: any) => 'condition' in card && card.condition[0] === 'Near Mint');
-}
-
-const getNearMintCard = (cards: any[]) => {
-  return cards.find(card => card.condition[0] === 'Near Mint');
-}
-
-const getStock = (cards: any[]) => {
-  const cardInStock = cards.find(card => {
-    if('qty' in card) {
-      return card.qty[0] !== '0'
-      } else return '0'
-    });
-  return cardInStock ? parseInt(cardInStock.qty[0]) : 0;
-}
-
-const getSetName = (set: string) => {
-  let setName = ''
-  if(set.toLowerCase().includes('promo')) {
-    setName = 'promo';
-  } else {
-    setName = set.replace("(Foil)", "").trim();
-  }
-  return setName.toLowerCase().trim();
-}
-
-export async function getCardPrices(cardName: string, time: Date) {
+export async function getCardPrices(cardName: string) {
     const url ="https://essearchapi-na.hawksearch.com/api/v2/search";
 
     const options = {...defaultOptions, body: JSON.stringify({
@@ -104,56 +67,31 @@ export async function getCardPrices(cardName: string, time: Date) {
       PageNo: 1,
       MaxPerPage: 96,
       clientguid: "cc3be22005ef47d3969c3de28f09571b"
-    })};
-    const scgResponseCards: Card[] = []
-    try {
-      const response = await fetch(url, options);
-      const data = await response.json();
-      //console.log("--------------");
+    })}
+    const response = await fetch(url, options);
+    const data = await response.json();
 
-      for (const card of data.Results) {
-        const scgCards = card.Document.hawk_child_attributes;
-        if (isValidCard(scgCards)) {
-          const nearMintCard = getNearMintCard(scgCards);
-          const priceNumber = parseFloat(nearMintCard.price[0]);
-          const formattedPrice = priceNumber.toFixed(2);
-          const isFoil = card.Document.finish[0].toLowerCase() === "foil";
-          const stock = getStock(scgCards);
+    const promises = data.Results.map(async (card: any) => {
+    const priceNumber = Number(card.Document.price_retail?.[0]);
+    const formattedPrice = priceNumber.toFixed(2);
 
-          const borderColorHexValue = await getPixelColor(card.Document.image?.[0]).catch((error) => {
-            console.error(error);
-            return "";
-          });
+    const borderColorHexValue = await getPixelColor(card.Document.image?.[0]).catch(error => {
+    console.error(error);
+    return '';
+    });
 
-          const currentCard: Card = {
-            image: card.Document.image?.[0],
-            collectorNumber: getCollectorNumber(card.Document),
-            setName: getSetName(card.Document.set?.[0]),
-            scgPrice: formattedPrice,
-            price: formattedPrice,
-            borderColor: borderColorHexValue,
-            foil: isFoil,
-            priceSource: "SCG",
-            stock: stock
-          };
+    const currentCard: Card = {
+        image: card.Document.image?.[0],
+        collectorNumber: card.Document.collector_number?.[0],
+        uniqueId: card.Document.unique_id?.[0],
+        set: card.Document.set?.[0],
+        price: formattedPrice,
+        borderColor: borderColorHexValue
+    };
 
-          if (formattedPrice === "0") {
-            currentCard.lastPrice = priceNumber.toFixed(2);
-          }
+    return currentCard;
+    });
 
-          /*console.log( "Source: " + currentCard.priceSource +"\n"+"Set name: "+currentCard.setName+"\n"+"Price: "+currentCard.scgPrice+
-            "\n"+"Foil: "+currentCard.foil+"\n"+"Collector Nº: "+currentCard.collectorNumber+"\n");*/
-
-          scgResponseCards.push(currentCard);
-        }
-      }
-    } catch (error) {
-      console.error(error);
-    }
-    /*
-    console.log("TOTAL SCG CARDS: " + scgResponseCards.length);
-    const endTime = new Date();
-    console.log("SCG RESULTS took: " + (endTime.getTime() - time.getTime())/1000);
-    */
-    return scgResponseCards;
+    const cardPrices = await Promise.all(promises);
+    return cardPrices;
 };

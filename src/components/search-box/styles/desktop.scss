@@ -1,7 +1,9 @@
+$ff-mtg: 'MTGFont', sans-serif;
+
 .search-box {
     display: flex;
     flex-direction: column;
-    margin-top: 16px;
+    margin-top: 32px;
     align-items: center;
     width: 55%;
     &__with-results {
@@ -16,17 +18,29 @@
         display: flex;
         position: relative;
         width: 100%;
-    }
-
-    &__input-container::before {
-        content: '';
-        position: absolute;
-        width: 99%;
-        height: 88%;
-        top: 3px;
-        left: 0;
-        box-shadow: 0px 0px 20px rgba(0, 0, 0, 1);
+        height: 64px;
+        background: linear-gradient(90deg, rgba(202, 214, 226, 0.35), transparent);
+        box-shadow: -12px -20px 56px 0px rgba(232, 237, 243, 0.05), 36px 12px 64px 0px rgba(2, 3, 3, 0.70), -16px -6px 80px 0px rgba(248, 249, 249, 0.03) inset;
         border-radius: 20px;
+        z-index: 100;
+    }
+    
+    //Rim light border for the input container
+    &__input-container::before {
+        content: "";
+        display: flex;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 20px;
+        border: 1px solid transparent;
+        background: linear-gradient(120deg, rgba(202, 214, 226, 0.65), transparent) border-box;
+        box-shadow: -12px -20px 56px 0px rgba(232, 237, 243, 0.05), 36px 12px 64px 0px rgba(2, 3, 3, 0.70), -16px -6px 80px 0px rgba(248, 249, 249, 0.03) inset;
+        mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+        mask-composite: exclude;
+        z-index: 0;
     }
 
     &__input-text-container {
@@ -39,14 +53,14 @@
 
     &__input-text {
         position: relative;
-        background: white;
+        background: transparent;
         border-radius: 12px 0 0 12px;
-        height: 43px;
         width: 100%;
         border: none;
-        padding: 2px 16px;
-        margin-top: -1px;
-        font-family: 'MTGFont', sans-serif;
+        margin-top: 4px;
+        padding: 2px 22px;
+        color: white;
+        font-family: $ff-mtg;
         font-size: x-large;
         font-weight: 600;
         outline: none;
@@ -57,62 +71,62 @@
         font-weight: 100;
         color: #a0b0b2;
       }
+      
     &__input-text-disabled {
         position: relative;
-        background: #a0b0b2;
-        color:#7f989d;
-        height: 43px;
-        width: 100%;
-        margin-top: -1px;
-        border: none;
+        background: transparent;
         border-radius: 12px 0 0 12px;
+        width: 100%;
+        border: none;
         padding: 2px 16px;
-        font-size: medium;
+        margin-top: -1px;
+        color:#7f989d;
+        font-family: $ff-mtg;
+        font-size: x-large;
         font-weight: 600;
-        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
         outline: none;
         z-index: 2;
     }
 
     &__button {
-        position: relative;
-        width: fit-content;
-        margin-left: -24px;
-        color: #2b2827;
+        display: flex;
+        width: 200px;
+        color: white;
         font-weight: 600;
-        font-size: large;
+        font-size: 1.4rem;
+        font-family: $ff-mtg;
         border: none;
-        height: 52px;
+        height: 100%;
         background: transparent;
-        //background-image: url('../../../assets/search-button.png');
-        //background-size: cover;
-        z-index: 1;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 1000;
+        transition: font-size 0.1s ease-in-out;
     }
 
-    &__button-image {
-        transition: background-image 300ms ease-in-out;
-        max-height: 100%;
+    &__button:hover {
+        font-size: 1.6rem;
+        color: rgb(29, 33, 36);
+        background: linear-gradient(120deg, rgba(white, 0.4) 10%, transparent 70%);
+        border-radius: 0 20px 20px 0;
+        border: 1px solid rgb(188, 196, 199);
     }
-    &__button-image-invisible {
-        display: none;
-    }
-    &__button-loading {
-        position: relative;
-        width: 220px;
-        margin-left: -24px;
-        padding-left: 32px;
-        padding-right: 16px;
-        color: #2b2827;
+
+    &__button-disabled {
+        display: flex;
+        width: 200px;
+        color: #7f989d;
         font-weight: 600;
-        font-size: large;
+        font-size: 1.4rem;
+        font-family: $ff-mtg;
         border: none;
-        height: 52px;
-        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        height: 100%;
         background: transparent;
-        background-image: url('../../../assets/search-button-loading.png');
-        background-size: cover;
-        animation: buttonLoading 600ms linear infinite;
-        z-index: 0;
+        align-items: center;
+        justify-content: center;
+        cursor: progress;
+        z-index: 1000;
     }
 
 }
@@ -129,9 +143,9 @@
       list-style: none;
       width: 94%;
       padding: 12px 0 0 0;
-      margin-top: -15px;
+      margin-top: -12px;
       border-radius: 0 0 6px 6px;
-      z-index: 0;
+      z-index: 100;
     }
 
     &__list-invisible {
@@ -155,7 +169,7 @@
       }
 
       &__result-item:hover {
-        background: #5d6f72;
+        background: #374353;
         color: white;
       }
   }
@@ -206,7 +220,6 @@
         align-items: center;
         justify-content: center;
         padding: 8px 12px 12px 12px;
-        min-height: 33px;
         border-radius: 0 0 14px 14px;
         margin-top: -18px;
         padding-top: 20px;

@@ -1,0 +1,76 @@
+.search-results-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    &__card-results {
+        display: flex;
+        margin-bottom: 32px;
+        width: 100%;
+        justify-content: center;
+
+      &-blurred {
+        position: fixed;
+        top: 32%;
+        left: 50%;
+        transform: translateX(-50%);
+        filter: blur(5px);
+        z-index: -10;
+      }
+
+      &-list {
+        display: grid;
+        justify-content: center;
+        width: 90vw;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 260px));
+        grid-gap: 32px;
+        margin-top: 32px;
+      }
+
+    }
+
+    &__card {
+        display: flex;
+        flex-direction: column;
+        box-shadow: 10px 1px 25px rgba(0, 0, 0, 0.7);
+        border-radius: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        border-left: 1px solid rgba(255, 255, 255, 0.2);
+        overflow: hidden;
+        animation-name: search-box-animation;
+        animation-duration: 0.5s;
+        animation-timing-function: ease-in-out;
+    }
+
+    &__card-price-container {
+        display: flex;
+        position:relative;
+        gap: 8px;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 12px 12px 12px;
+        border-radius: 0 0 14px 14px;
+        margin-top: -18px;
+        padding-top: 20px;
+        z-index: 0;
+        span {
+            max-width: 100%;
+            font-weight: 600;
+            width: fit-content;
+            font-family: Helvetica, sans-serif;
+        }
+    }
+
+    &__card-image {
+        position: relative;
+        border-radius: 20px;
+        width: 100%;
+        height: auto;
+        justify-self: center;
+        grid-column: auto;
+        grid-row: auto;
+        max-width: 100%;
+        max-height: 100%;
+        z-index: 1;
+    }
+  }

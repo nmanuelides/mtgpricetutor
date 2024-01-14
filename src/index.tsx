@@ -6,6 +6,8 @@ import SearchBox from './components/search-box/src/SearchBox';
 import { DOLAR_PIRULO } from './dolar-pirulo';
 import DollarValueInput from './components/dollar-value-input/src/DollarValueInput';
 import { DollarValueContext } from './contexts/dollarValueContext';
+import mtgLogo3 from './assets/MTGPT-Logo.png';
+
 
 const App = () => {
   const [savedDollarValue, setSavedDollarValue] = React.useState(DOLAR_PIRULO);
@@ -18,12 +20,13 @@ const App = () => {
         <div className='mtg-tutor__background' />
         <div className='mtg-tutor__main-container'>
           <div data-text='MTG PRICE TUTOR' className='title'>
-            MTG PRICE TUTOR
+            MTG<br/> PRICE TUTOR
+          <img className='title-image' src={mtgLogo3}alt='MTG Logo'></img>
           </div>
-          <span className='subtitle'>Los precios corresponden a cartas en estado NM. Precios de SCG o CK en su defecto. Precio en rojo significa desactualizado por faltante de stock.</span>
-          <span className='subtitle'>
-            Valor en pesos calculados según dólar:
+          <span className='subtitle'>Precios de Star City Games <br/>
+          Valor en pesos calculado segun dolar:
           </span>
+            
           <DollarValueInput />
           <SearchBox />
         </div>
@@ -35,7 +38,4 @@ const App = () => {
 ReactDOM.render(<App />, document.getElementById('root'));
 
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+reportWebVitals(console.log);
