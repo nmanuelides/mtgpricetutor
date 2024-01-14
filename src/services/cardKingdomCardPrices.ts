@@ -82,8 +82,7 @@ async function streamToString(stream: ReadableStream<Uint8Array>): Promise<strin
         }
     });
 
-    console.log("TOTAL CK CARDS: " + cards.length);
-    return cards;
+        return cards;
   }
 
   const toKometCkUrl = (url: string, limit = 100) => {

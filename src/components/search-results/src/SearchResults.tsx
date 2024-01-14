@@ -31,7 +31,7 @@ const SearchResults = ({selectedCards, isSearching}: searchResultsProps): JSX.El
                 const arsPriceStyle = { border: `2px solid ${contrastingColor}`, borderRadius: '8px', padding: '4px', fontSize: `${getFontSizeForSpan(pesosSpan)}px`};
                 const dollarsStyle: CSSProperties = { fontSize: `${getFontSizeForSpan(dollarSpan)}px` };
                 const priceInPesos= (parseFloat(card.price) * savedDollarValue).toFixed(2);
-                console.log('PRICE IN PESOS: '+priceInPesos);
+                
                 return (
                   <Tilt options={tiltOptions} className="search-results-container__card" key={card.image}>
                     <img src={card.image} alt="Card" className={'search-results-container__card-image'} key={card.image}/>
