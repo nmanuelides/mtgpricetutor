@@ -29,7 +29,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "git checkout gh-pages && git merge master && git checkout --theirs . && git add . && git commit -m 'Merge changes from master using theirs' && git push origin gh-pages"
+    "deploy": "npm run build && cp -r build/* . && git add . && git commit -a -m 'Deploy to gh pages' && git push origin gh-pages"
   },
   "eslintConfig": {
     "extends": [
