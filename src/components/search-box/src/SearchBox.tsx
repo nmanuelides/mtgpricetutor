@@ -109,8 +109,9 @@ const SearchBox = () => {
 
   return (
     <ShowSnackbarContext.Provider value={{showSnackbar, setShowSnackbar}}>
-    <form className={selectedCards.length > 0 ? 'search-box__with-results' : 'search-box'} onSubmit={onSubmit}>
+    <form className={'search-box'} onSubmit={onSubmit}>
       <div className={'search-box__input-container'}>
+        <LoadingIndicator isLoading={isLoading}/>
         <div className='search-box__input-text-container'>
         <input
           name='searchInput'
@@ -123,7 +124,6 @@ const SearchBox = () => {
           placeholder="Ingresá el nombre de una carta..."
           disabled={isLoading}
         />
-        <LoadingIndicator isLoading={isLoading}/>
         </div>
         <button className={isLoading ? 'search-box__button-disabled' : 'search-box__button'} type='submit'disabled={isLoading}>
           BUSCAR

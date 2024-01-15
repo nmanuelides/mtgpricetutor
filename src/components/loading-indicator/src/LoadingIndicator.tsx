@@ -1,5 +1,6 @@
 import React from 'react';
 import '../styles/desktop.scss';
+import '../styles/mobile.scss';
 
 interface LoadingIndicatorProps {
   isLoading: boolean;
