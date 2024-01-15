@@ -1,0 +1,16 @@
+@media (max-width: 768px) { 
+    .search-results-container {
+        &__card-results {
+            &-blurred {
+                top: 37%;
+            }
+
+            &-list {
+                grid-template-columns: repeat(auto-fit, minmax(160px, 60px));
+            }
+    }
+    &__card-price-container { 
+        margin-top: -8px;
+    }
+}
+}

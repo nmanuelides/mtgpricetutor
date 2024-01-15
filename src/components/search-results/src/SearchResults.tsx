@@ -6,6 +6,7 @@ import { DollarValueContext } from "../../../contexts/dollarValueContext";
 import Tilt from '../../../hoc/Tilt';
 import { tiltOptions } from "../../../hoc/tiltOptions";
 import '../styles/desktop.scss';
+import '../styles/mobile.scss';
 
 interface searchResultsProps {
     selectedCards: Card[];
