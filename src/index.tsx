@@ -19,9 +19,9 @@ const App = () => {
       >
         <div className='mtg-tutor__background' />
         <div className='mtg-tutor__main-container'>
-          <div data-text='MTG PRICE TUTOR' className='title'>
+          <div data-text='MTG PRICE TUTOR' className='header'>
             MTG<br/> PRICE TUTOR
-          <img className='title-image' src={mtgLogo3}alt='MTG Logo'></img>
+          <img className='header-image' src={mtgLogo3}alt='MTG Logo'></img>
           </div>
           <span className='subtitle'>Precios de Star City Games <br/>
           Valor en pesos calculado segun dolar:

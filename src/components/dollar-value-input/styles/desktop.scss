@@ -93,11 +93,6 @@
     cursor: pointer;
   }
 
-  &__button:hover {
-    background: linear-gradient(120deg, rgba(white, 0.4) 10%, transparent 70%);
-    border: 1px solid rgb(188, 196, 199);
-  }
-
   &__button-image {
     max-height: 70%;
     width: auto;
@@ -105,10 +100,18 @@
     transition: max-height 0.15s ease-in-out;
   }
 
-  &__button-image:hover {
+}
+
+@media (hover: hover) {
+  .dollar-value-input__button-image:hover {
     max-height: 85%;
     width: auto;
     filter: invert(7%) sepia(2%) saturate(4423%) hue-rotate(164deg) brightness(97%) contrast(87%);
+}
+
+.dollar-value-input__button:hover {
+  background: linear-gradient(120deg, rgba(white, 0.4) 10%, transparent 70%);
+  border: 1px solid rgb(188, 196, 199);
   }
 }
 

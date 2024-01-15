@@ -75,56 +75,28 @@ code {
   width: 100%;
   align-items: center;
   margin-top: 32px;
-  .title{
+  .header{
     display: flex;
     font-size:3.2rem;
     position: relative;
     font-weight: 1000;
     font-family: 'MTGFont', sans-serif;
     z-index: 1;
-    position: relative;
     color: white;
-    //background: white;
-    //background-clip: text;
-    //-webkit-text-fill-color: transparent;
-    //mix-blend-mode: overlay;
   }
-  /*.title::after {
-    content: 'MTG PRICE TUTOR';
-    position: absolute;
-    top: 0%;
-    left: 0%;
-    color: transparent;
-    -webkit-text-stroke: 1.5px white;
-    z-index: 2;
-    mix-blend-mode: normal;
-    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-  }*/
 
-  /*.title::before {
-    content: 'MTG PRICE TUTOR';
-    position: absolute;
-    top: 0%;
-    left: 0%;
-    color: transparent;
-    -webkit-text-stroke: 1.5px white;
-    z-index: 2;
-    mix-blend-mode: normal;
-    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-  }*/
-
-  .title-image { 
+  .header-image { 
     width: auto;
     max-height: 115px;
     margin-left: 300px;
   }
 
   .subtitle {
-    margin: 16px;
+    margin: 32px 0 0 0;
     text-align: center;
     position: relative;
     color: white;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-family: 'GilroyLight', sans-serif;
     font-weight: 500;
     line-height: 28px;
@@ -136,23 +108,38 @@ code {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    height: 100svh;
-    width: 100svw;
+    width: 100vw;
     margin: auto;
     font-family: 'MTGFont', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
   }
 
   .mtg-tutor__main-container {
-    .title {
-      font-size: 2.6rem;
+    display: flex;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+
+    .header {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      margin-bottom: 32px;
+      font-size: 2rem;
+      position: relative;
+    }
+
+    .header-image { 
+      width: auto;
+      max-height: 80px;
+      margin: 0;
     }
     .subtitle {
       margin: 0 12px;
       text-align: center;
-      font-size: large;
+      font-size: 0.9rem;
+      line-height: 16px;
     }
   }
 }
