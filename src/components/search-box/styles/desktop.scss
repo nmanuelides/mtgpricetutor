@@ -6,6 +6,7 @@ $ff-mtg: 'MTGFont', sans-serif;
     margin-top: 32px;
     align-items: center;
     width: 55%;
+    max-width: 512px;
     &__with-results {
         display: flex;
         width: 55%;
