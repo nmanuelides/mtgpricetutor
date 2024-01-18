@@ -24,7 +24,7 @@ const App = () => {
           <img className='header-image' src={mtgLogo}alt='MTG Logo'></img>
           </div>
           <span className='subtitle'>Precios de Star City Games <br/>
-          Valor en pesos calculado segun dolar:
+          Valor en pesos calculado según dolar:
           </span>
             
           <DollarValueInput />
