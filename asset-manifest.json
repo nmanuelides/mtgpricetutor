@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.0b0c3d38.css",
-    "main.js": "/static/js/main.bd46a73d.js",
+    "main.css": "/static/css/main.129bc8f8.css",
+    "main.js": "/static/js/main.ffd9c999.js",
     "static/js/787.0a4814dd.chunk.js": "/static/js/787.0a4814dd.chunk.js",
     "static/media/page-bg13.jpg": "/static/media/page-bg13.3cc199aa5f119d7fd84e.jpg",
     "static/media/Beleren2016-Bold.ttf": "/static/media/Beleren2016-Bold.2ceb65923c91913395fa.ttf",
@@ -11,12 +11,12 @@
     "static/media/Gilroy-Light.otf": "/static/media/Gilroy-Light.cc7ab55d27205bd64001.otf",
     "static/media/MTGPT-LogoV2.png": "/static/media/MTGPT-LogoV2.e8c7e1211c9cb6d23986.png",
     "index.html": "/index.html",
-    "main.0b0c3d38.css.map": "/static/css/main.0b0c3d38.css.map",
-    "main.bd46a73d.js.map": "/static/js/main.bd46a73d.js.map",
+    "main.129bc8f8.css.map": "/static/css/main.129bc8f8.css.map",
+    "main.ffd9c999.js.map": "/static/js/main.ffd9c999.js.map",
     "787.0a4814dd.chunk.js.map": "/static/js/787.0a4814dd.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0b0c3d38.css",
-    "static/js/main.bd46a73d.js"
+    "static/css/main.129bc8f8.css",
+    "static/js/main.ffd9c999.js"
   ]
 }
