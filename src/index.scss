@@ -1,18 +1,18 @@
-$page-background: url('./assets/page-bg13.jpg');
+$page-background: url("./assets/page-bg13.jpg");
 
 @font-face {
-  font-family: 'MTGFont';
-  src: url('./assets/Beleren2016-Bold.ttf') format('truetype'),
+  font-family: "MTGFont";
+  src: url("./assets/Beleren2016-Bold.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: 'GilroyLight';
-  src: url('./assets/Gilroy-Light.otf') format('truetype');
+  font-family: "GilroyLight";
+  src: url("./assets/Gilroy-Light.otf") format("truetype");
 }
 
 @font-face {
-  font-family: 'GilroyExtraBold';
-  src: url('./assets/Gilroy-ExtraBold.otf') format('truetype');
+  font-family: "GilroyExtraBold";
+  src: url("./assets/Gilroy-ExtraBold.otf") format("truetype");
 }
 
 body {
@@ -22,18 +22,34 @@ body {
   background: black;
   width: 100svw;
   margin: auto;
-  font-family: 'MTGFont', sans-serif;
+  font-family: "MTGFont", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   position: relative;
 }
 
 div#root {
-    width: 100%;
+  width: 100%;
 }
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.curtain-on {
+  position: absolute;
+  background: black;
+  width: 100svw;
+  height: 100svh;
+  z-index: 100000;
+  backdrop-filter: blur(40px);
+  animation: intro 2s ease forwards;
+}
+
+@keyframes intro {
+  100% {
+    background: transparent;
+    backdrop-filter: blur(0);
+  }
 }
 
 .mtg-tutor__background {
@@ -49,8 +65,8 @@ code {
 }
 
 .mtg-tutor__background::before {
-  content: '';
-  position:absolute;
+  content: "";
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -59,8 +75,8 @@ code {
 }
 
 .mtg-tutor__background::after {
-  content: '';
-  position:absolute;
+  content: "";
+  position: absolute;
   background-color: rgba($color: #000000, $alpha: 0.2);
   top: 0;
   left: 0;
@@ -75,17 +91,17 @@ code {
   width: 100%;
   align-items: center;
   margin-top: 32px;
-  .header{
+  .header {
     display: flex;
-    font-size:3.2rem;
+    font-size: 3.2rem;
     position: relative;
     font-weight: 1000;
-    font-family: 'MTGFont', sans-serif;
+    font-family: "MTGFont", sans-serif;
     z-index: 1;
     color: white;
   }
 
-  .header-image { 
+  .header-image {
     width: auto;
     max-height: 115px;
     margin-left: 300px;
@@ -97,7 +113,7 @@ code {
     position: relative;
     color: white;
     font-size: 1.2rem;
-    font-family: 'GilroyLight', sans-serif;
+    font-family: "GilroyLight", sans-serif;
     font-weight: 500;
     line-height: 28px;
   }
@@ -110,7 +126,7 @@ code {
     align-items: flex-start;
     width: 100vw;
     margin: auto;
-    font-family: 'MTGFont', sans-serif;
+    font-family: "MTGFont", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -130,7 +146,7 @@ code {
       position: relative;
     }
 
-    .header-image { 
+    .header-image {
       width: auto;
       max-height: 80px;
       margin: 0;
