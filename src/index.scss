@@ -49,6 +49,7 @@ code {
   100% {
     background: transparent;
     backdrop-filter: blur(0);
+    z-index: -2000;
   }
 }
 
