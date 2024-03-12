@@ -1,7 +1,7 @@
 {
   "name": "mtg-tutor",
   "version": "0.1.0",
-  "homepage": "https://nmanuelides.github.io/",
+  "homepage": ".",
   "private": true,
   "type": "module",
   "dependencies": {
